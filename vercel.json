@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.py"
+    },
+    {
+      "source": "/",
+      "destination": "/static/index.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/static/app.html"
+    },
+    {
+      "source": "/app.html",
+      "destination": "/static/app.html"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/static/assets/$1"
+    },
+    {
+      "source": "/artifacts/(.*)",
+      "destination": "/artifacts/$1"
+    }
+  ]
+}
