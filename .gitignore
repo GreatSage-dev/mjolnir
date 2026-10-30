@@ -1,0 +1,18 @@
+# Secrets & local environment
+.env
+.env.local
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Visual inspection scratch artifacts
+.taste-skill/
+
+# Temporary video render chunks
+video/chunks/
+
+# Uncompressed audio
+*.wav

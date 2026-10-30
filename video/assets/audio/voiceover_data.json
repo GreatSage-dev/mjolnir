@@ -1,0 +1,2367 @@
+{
+  "vo_lead": 0.45,
+  "total_duration": 66.13,
+  "word_count": 168,
+  "phrase_count": 40,
+  "cues": {
+    "cost_15x": 4.769,
+    "seventy_fail": 6.441,
+    "act2_why": 10.435,
+    "fork_api": 14.127,
+    "fork_math": 17.308,
+    "web_pollute": 19.444,
+    "act3_mjolnir": 22.997,
+    "sandbox_lock": 29.638,
+    "tavily_3stage": 32.065,
+    "escalate_super": 36.268,
+    "act4_testing": 40.83,
+    "open_workbench": 44.011,
+    "click_run": 46.937,
+    "watch_trace": 47.808,
+    "diff_receipt": 53.079,
+    "act5_ten_of_ten": 54.693,
+    "cost_minus_70": 56.852,
+    "summary_pillars": 58.756,
+    "final_mjolnir": 63.145
+  },
+  "phrases": [
+    {
+      "id": 0,
+      "start": 0.45,
+      "end": 2.191,
+      "text": "Give a hundred real coding bugs",
+      "words": [
+        {
+          "word": "Give",
+          "start": 0.45,
+          "end": 0.682,
+          "index": 0
+        },
+        {
+          "word": "a",
+          "start": 0.717,
+          "end": 0.74,
+          "index": 1
+        },
+        {
+          "word": "hundred",
+          "start": 0.856,
+          "end": 1.181,
+          "index": 2
+        },
+        {
+          "word": "real",
+          "start": 1.263,
+          "end": 1.46,
+          "index": 3
+        },
+        {
+          "word": "coding",
+          "start": 1.53,
+          "end": 1.843,
+          "index": 4
+        },
+        {
+          "word": "bugs",
+          "start": 1.901,
+          "end": 2.191,
+          "index": 5
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "start": 2.226,
+      "end": 3.933,
+      "text": "to a giant AI model alone.",
+      "words": [
+        {
+          "word": "to",
+          "start": 2.226,
+          "end": 2.284,
+          "index": 6
+        },
+        {
+          "word": "a",
+          "start": 2.366,
+          "end": 2.389,
+          "index": 7
+        },
+        {
+          "word": "giant",
+          "start": 2.459,
+          "end": 2.714,
+          "index": 8
+        },
+        {
+          "word": "AI",
+          "start": 2.76,
+          "end": 3.039,
+          "index": 9
+        },
+        {
+          "word": "model",
+          "start": 3.097,
+          "end": 3.364,
+          "index": 10
+        },
+        {
+          "word": "alone.",
+          "start": 3.422,
+          "end": 3.933,
+          "index": 11
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 4.363,
+      "end": 6.034,
+      "text": "You pay fifteen times more,",
+      "words": [
+        {
+          "word": "You",
+          "start": 4.363,
+          "end": 4.49,
+          "index": 12
+        },
+        {
+          "word": "pay",
+          "start": 4.548,
+          "end": 4.688,
+          "index": 13
+        },
+        {
+          "word": "fifteen",
+          "start": 4.769,
+          "end": 5.198,
+          "index": 14
+        },
+        {
+          "word": "times",
+          "start": 5.245,
+          "end": 5.535,
+          "index": 15
+        },
+        {
+          "word": "more,",
+          "start": 5.616,
+          "end": 6.034,
+          "index": 16
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 6.185,
+      "end": 7.486,
+      "text": "and seventy out of a hundred",
+      "words": [
+        {
+          "word": "and",
+          "start": 6.185,
+          "end": 6.348,
+          "index": 17
+        },
+        {
+          "word": "seventy",
+          "start": 6.441,
+          "end": 6.835,
+          "index": 18
+        },
+        {
+          "word": "out",
+          "start": 6.882,
+          "end": 6.986,
+          "index": 19
+        },
+        {
+          "word": "of",
+          "start": 7.021,
+          "end": 7.068,
+          "index": 20
+        },
+        {
+          "word": "a",
+          "start": 7.114,
+          "end": 7.137,
+          "index": 21
+        },
+        {
+          "word": "hundred",
+          "start": 7.195,
+          "end": 7.486,
+          "index": 22
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 7.532,
+      "end": 8.914,
+      "text": "still fail the moment a library",
+      "words": [
+        {
+          "word": "still",
+          "start": 7.532,
+          "end": 7.753,
+          "index": 23
+        },
+        {
+          "word": "fail",
+          "start": 7.822,
+          "end": 8.031,
+          "index": 24
+        },
+        {
+          "word": "the",
+          "start": 8.101,
+          "end": 8.171,
+          "index": 25
+        },
+        {
+          "word": "moment",
+          "start": 8.217,
+          "end": 8.449,
+          "index": 26
+        },
+        {
+          "word": "a",
+          "start": 8.472,
+          "end": 8.496,
+          "index": 27
+        },
+        {
+          "word": "library",
+          "start": 8.554,
+          "end": 8.914,
+          "index": 28
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 8.96,
+      "end": 9.935,
+      "text": "updates its code.",
+      "words": [
+        {
+          "word": "updates",
+          "start": 8.96,
+          "end": 9.297,
+          "index": 29
+        },
+        {
+          "word": "its",
+          "start": 9.332,
+          "end": 9.436,
+          "index": 30
+        },
+        {
+          "word": "code.",
+          "start": 9.483,
+          "end": 9.935,
+          "index": 31
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 10.435,
+      "end": 10.969,
+      "text": "Why?",
+      "words": [
+        {
+          "word": "Why?",
+          "start": 10.435,
+          "end": 10.969,
+          "index": 32
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 11.282,
+      "end": 12.803,
+      "text": "Because bugs fail in two very",
+      "words": [
+        {
+          "word": "Because",
+          "start": 11.282,
+          "end": 11.596,
+          "index": 33
+        },
+        {
+          "word": "bugs",
+          "start": 11.642,
+          "end": 11.921,
+          "index": 34
+        },
+        {
+          "word": "fail",
+          "start": 11.979,
+          "end": 12.176,
+          "index": 35
+        },
+        {
+          "word": "in",
+          "start": 12.246,
+          "end": 12.304,
+          "index": 36
+        },
+        {
+          "word": "two",
+          "start": 12.35,
+          "end": 12.513,
+          "index": 37
+        },
+        {
+          "word": "very",
+          "start": 12.594,
+          "end": 12.803,
+          "index": 38
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 12.849,
+      "end": 13.627,
+      "text": "different ways.",
+      "words": [
+        {
+          "word": "different",
+          "start": 12.849,
+          "end": 13.105,
+          "index": 39
+        },
+        {
+          "word": "ways.",
+          "start": 13.14,
+          "end": 13.627,
+          "index": 40
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 14.127,
+      "end": 16.124,
+      "text": "Either a brand-new API changed after",
+      "words": [
+        {
+          "word": "Either",
+          "start": 14.127,
+          "end": 14.382,
+          "index": 41
+        },
+        {
+          "word": "a",
+          "start": 14.452,
+          "end": 14.487,
+          "index": 42
+        },
+        {
+          "word": "brand-new",
+          "start": 14.556,
+          "end": 14.998,
+          "index": 43
+        },
+        {
+          "word": "API",
+          "start": 15.067,
+          "end": 15.532,
+          "index": 44
+        },
+        {
+          "word": "changed",
+          "start": 15.613,
+          "end": 15.903,
+          "index": 45
+        },
+        {
+          "word": "after",
+          "start": 15.938,
+          "end": 16.124,
+          "index": 46
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 16.17,
+      "end": 16.716,
+      "text": "training,",
+      "words": [
+        {
+          "word": "training,",
+          "start": 16.17,
+          "end": 16.716,
+          "index": 47
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 16.983,
+      "end": 18.399,
+      "text": "or the math logic itself is",
+      "words": [
+        {
+          "word": "or",
+          "start": 16.983,
+          "end": 17.122,
+          "index": 48
+        },
+        {
+          "word": "the",
+          "start": 17.169,
+          "end": 17.238,
+          "index": 49
+        },
+        {
+          "word": "math",
+          "start": 17.308,
+          "end": 17.54,
+          "index": 50
+        },
+        {
+          "word": "logic",
+          "start": 17.598,
+          "end": 17.889,
+          "index": 51
+        },
+        {
+          "word": "itself",
+          "start": 17.935,
+          "end": 18.26,
+          "index": 52
+        },
+        {
+          "word": "is",
+          "start": 18.318,
+          "end": 18.399,
+          "index": 53
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 18.469,
+      "end": 18.945,
+      "text": "hard.",
+      "words": [
+        {
+          "word": "hard.",
+          "start": 18.469,
+          "end": 18.945,
+          "index": 54
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 19.444,
+      "end": 21.093,
+      "text": "Searching the web on every task",
+      "words": [
+        {
+          "word": "Searching",
+          "start": 19.444,
+          "end": 19.827,
+          "index": 55
+        },
+        {
+          "word": "the",
+          "start": 19.885,
+          "end": 19.955,
+          "index": 56
+        },
+        {
+          "word": "web",
+          "start": 20.002,
+          "end": 20.187,
+          "index": 57
+        },
+        {
+          "word": "on",
+          "start": 20.257,
+          "end": 20.338,
+          "index": 58
+        },
+        {
+          "word": "every",
+          "start": 20.431,
+          "end": 20.687,
+          "index": 59
+        },
+        {
+          "word": "task",
+          "start": 20.745,
+          "end": 21.093,
+          "index": 60
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 21.139,
+      "end": 22.416,
+      "text": "pollutes pure math.",
+      "words": [
+        {
+          "word": "pollutes",
+          "start": 21.139,
+          "end": 21.511,
+          "index": 61
+        },
+        {
+          "word": "pure",
+          "start": 21.627,
+          "end": 21.917,
+          "index": 62
+        },
+        {
+          "word": "math.",
+          "start": 21.964,
+          "end": 22.416,
+          "index": 63
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 22.997,
+      "end": 23.844,
+      "text": "Meet Mjolnir.",
+      "words": [
+        {
+          "word": "Meet",
+          "start": 22.997,
+          "end": 23.206,
+          "index": 64
+        },
+        {
+          "word": "Mjolnir.",
+          "start": 23.252,
+          "end": 23.844,
+          "index": 65
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 24.425,
+      "end": 26.41,
+      "text": "Every task runs first on fast",
+      "words": [
+        {
+          "word": "Every",
+          "start": 24.425,
+          "end": 24.704,
+          "index": 66
+        },
+        {
+          "word": "task",
+          "start": 24.75,
+          "end": 25.064,
+          "index": 67
+        },
+        {
+          "word": "runs",
+          "start": 25.133,
+          "end": 25.365,
+          "index": 68
+        },
+        {
+          "word": "first",
+          "start": 25.447,
+          "end": 25.749,
+          "index": 69
+        },
+        {
+          "word": "on",
+          "start": 25.807,
+          "end": 25.934,
+          "index": 70
+        },
+        {
+          "word": "fast",
+          "start": 26.05,
+          "end": 26.41,
+          "index": 71
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 26.48,
+      "end": 28.755,
+      "text": "NVIDIA Nemotron Nano on Nebius,",
+      "words": [
+        {
+          "word": "NVIDIA",
+          "start": 26.48,
+          "end": 26.933,
+          "index": 72
+        },
+        {
+          "word": "Nemotron",
+          "start": 27.002,
+          "end": 27.478,
+          "index": 73
+        },
+        {
+          "word": "Nano",
+          "start": 27.536,
+          "end": 27.873,
+          "index": 74
+        },
+        {
+          "word": "on",
+          "start": 27.954,
+          "end": 28.059,
+          "index": 75
+        },
+        {
+          "word": "Nebius,",
+          "start": 28.117,
+          "end": 28.755,
+          "index": 76
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 29.023,
+      "end": 30.033,
+      "text": "checked by a locked,",
+      "words": [
+        {
+          "word": "checked",
+          "start": 29.023,
+          "end": 29.324,
+          "index": 77
+        },
+        {
+          "word": "by",
+          "start": 29.348,
+          "end": 29.464,
+          "index": 78
+        },
+        {
+          "word": "a",
+          "start": 29.522,
+          "end": 29.545,
+          "index": 79
+        },
+        {
+          "word": "locked,",
+          "start": 29.638,
+          "end": 30.033,
+          "index": 80
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 30.114,
+      "end": 31.635,
+      "text": "un-cheatable unit test.",
+      "words": [
+        {
+          "word": "un-cheatable",
+          "start": 30.114,
+          "end": 30.811,
+          "index": 81
+        },
+        {
+          "word": "unit",
+          "start": 30.904,
+          "end": 31.148,
+          "index": 82
+        },
+        {
+          "word": "test.",
+          "start": 31.182,
+          "end": 31.635,
+          "index": 83
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 32.065,
+      "end": 33.295,
+      "text": "Missing a new API?",
+      "words": [
+        {
+          "word": "Missing",
+          "start": 32.065,
+          "end": 32.39,
+          "index": 84
+        },
+        {
+          "word": "a",
+          "start": 32.436,
+          "end": 32.459,
+          "index": 85
+        },
+        {
+          "word": "new",
+          "start": 32.518,
+          "end": 32.634,
+          "index": 86
+        },
+        {
+          "word": "API?",
+          "start": 32.68,
+          "end": 33.295,
+          "index": 87
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 33.609,
+      "end": 35.327,
+      "text": "Tavily pulls live docs in three",
+      "words": [
+        {
+          "word": "Tavily",
+          "start": 33.609,
+          "end": 34.027,
+          "index": 88
+        },
+        {
+          "word": "pulls",
+          "start": 34.073,
+          "end": 34.294,
+          "index": 89
+        },
+        {
+          "word": "live",
+          "start": 34.375,
+          "end": 34.642,
+          "index": 90
+        },
+        {
+          "word": "docs",
+          "start": 34.677,
+          "end": 34.967,
+          "index": 91
+        },
+        {
+          "word": "in",
+          "start": 35.002,
+          "end": 35.072,
+          "index": 92
+        },
+        {
+          "word": "three",
+          "start": 35.118,
+          "end": 35.327,
+          "index": 93
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 35.362,
+      "end": 36.001,
+      "text": "stages.",
+      "words": [
+        {
+          "word": "stages.",
+          "start": 35.362,
+          "end": 36.001,
+          "index": 94
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 36.268,
+      "end": 37.394,
+      "text": "Hard logic bug?",
+      "words": [
+        {
+          "word": "Hard",
+          "start": 36.268,
+          "end": 36.523,
+          "index": 95
+        },
+        {
+          "word": "logic",
+          "start": 36.581,
+          "end": 36.906,
+          "index": 96
+        },
+        {
+          "word": "bug?",
+          "start": 36.964,
+          "end": 37.394,
+          "index": 97
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 37.765,
+      "end": 39.263,
+      "text": "Skip search and step up to",
+      "words": [
+        {
+          "word": "Skip",
+          "start": 37.765,
+          "end": 38.055,
+          "index": 98
+        },
+        {
+          "word": "search",
+          "start": 38.148,
+          "end": 38.45,
+          "index": 99
+        },
+        {
+          "word": "and",
+          "start": 38.532,
+          "end": 38.682,
+          "index": 100
+        },
+        {
+          "word": "step",
+          "start": 38.74,
+          "end": 38.984,
+          "index": 101
+        },
+        {
+          "word": "up",
+          "start": 39.054,
+          "end": 39.147,
+          "index": 102
+        },
+        {
+          "word": "to",
+          "start": 39.205,
+          "end": 39.263,
+          "index": 103
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 39.356,
+      "end": 40.517,
+      "text": "Super or Ultra.",
+      "words": [
+        {
+          "word": "Super",
+          "start": 39.356,
+          "end": 39.716,
+          "index": 104
+        },
+        {
+          "word": "or",
+          "start": 39.797,
+          "end": 39.913,
+          "index": 105
+        },
+        {
+          "word": "Ultra.",
+          "start": 39.983,
+          "end": 40.517,
+          "index": 106
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 40.83,
+      "end": 42.827,
+      "text": "Testing the app takes one click.",
+      "words": [
+        {
+          "word": "Testing",
+          "start": 40.83,
+          "end": 41.306,
+          "index": 107
+        },
+        {
+          "word": "the",
+          "start": 41.364,
+          "end": 41.434,
+          "index": 108
+        },
+        {
+          "word": "app",
+          "start": 41.515,
+          "end": 41.736,
+          "index": 109
+        },
+        {
+          "word": "takes",
+          "start": 41.794,
+          "end": 42.026,
+          "index": 110
+        },
+        {
+          "word": "one",
+          "start": 42.107,
+          "end": 42.351,
+          "index": 111
+        },
+        {
+          "word": "click.",
+          "start": 42.398,
+          "end": 42.827,
+          "index": 112
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 43.257,
+      "end": 44.673,
+      "text": "Open the live Workbench,",
+      "words": [
+        {
+          "word": "Open",
+          "start": 43.257,
+          "end": 43.57,
+          "index": 113
+        },
+        {
+          "word": "the",
+          "start": 43.617,
+          "end": 43.686,
+          "index": 114
+        },
+        {
+          "word": "live",
+          "start": 43.744,
+          "end": 43.977,
+          "index": 115
+        },
+        {
+          "word": "Workbench,",
+          "start": 44.011,
+          "end": 44.673,
+          "index": 116
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 44.871,
+      "end": 46.391,
+      "text": "pick any broken task,",
+      "words": [
+        {
+          "word": "pick",
+          "start": 44.871,
+          "end": 45.103,
+          "index": 117
+        },
+        {
+          "word": "any",
+          "start": 45.196,
+          "end": 45.416,
+          "index": 118
+        },
+        {
+          "word": "broken",
+          "start": 45.474,
+          "end": 45.811,
+          "index": 119
+        },
+        {
+          "word": "task,",
+          "start": 45.869,
+          "end": 46.391,
+          "index": 120
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 46.449,
+      "end": 47.378,
+      "text": "and hit Run.",
+      "words": [
+        {
+          "word": "and",
+          "start": 46.449,
+          "end": 46.612,
+          "index": 121
+        },
+        {
+          "word": "hit",
+          "start": 46.682,
+          "end": 46.856,
+          "index": 122
+        },
+        {
+          "word": "Run.",
+          "start": 46.937,
+          "end": 47.378,
+          "index": 123
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 47.808,
+      "end": 49.445,
+      "text": "Watch the locked test catch the",
+      "words": [
+        {
+          "word": "Watch",
+          "start": 47.808,
+          "end": 48.121,
+          "index": 124
+        },
+        {
+          "word": "the",
+          "start": 48.191,
+          "end": 48.272,
+          "index": 125
+        },
+        {
+          "word": "locked",
+          "start": 48.353,
+          "end": 48.632,
+          "index": 126
+        },
+        {
+          "word": "test",
+          "start": 48.655,
+          "end": 48.957,
+          "index": 127
+        },
+        {
+          "word": "catch",
+          "start": 49.027,
+          "end": 49.294,
+          "index": 128
+        },
+        {
+          "word": "the",
+          "start": 49.352,
+          "end": 49.445,
+          "index": 129
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 49.526,
+      "end": 50.49,
+      "text": "exact error,",
+      "words": [
+        {
+          "word": "exact",
+          "start": 49.526,
+          "end": 49.956,
+          "index": 130
+        },
+        {
+          "word": "error,",
+          "start": 50.014,
+          "end": 50.49,
+          "index": 131
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 50.803,
+      "end": 51.674,
+      "text": "route the fix,",
+      "words": [
+        {
+          "word": "route",
+          "start": 50.803,
+          "end": 51.047,
+          "index": 132
+        },
+        {
+          "word": "the",
+          "start": 51.07,
+          "end": 51.14,
+          "index": 133
+        },
+        {
+          "word": "fix,",
+          "start": 51.198,
+          "end": 51.674,
+          "index": 134
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 51.848,
+      "end": 53.276,
+      "text": "and print a verified git diff",
+      "words": [
+        {
+          "word": "and",
+          "start": 51.848,
+          "end": 51.987,
+          "index": 135
+        },
+        {
+          "word": "print",
+          "start": 52.045,
+          "end": 52.208,
+          "index": 136
+        },
+        {
+          "word": "a",
+          "start": 52.243,
+          "end": 52.266,
+          "index": 137
+        },
+        {
+          "word": "verified",
+          "start": 52.324,
+          "end": 52.765,
+          "index": 138
+        },
+        {
+          "word": "git",
+          "start": 52.812,
+          "end": 53.021,
+          "index": 139
+        },
+        {
+          "word": "diff",
+          "start": 53.079,
+          "end": 53.276,
+          "index": 140
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 53.323,
+      "end": 54.193,
+      "text": "and cost receipt.",
+      "words": [
+        {
+          "word": "and",
+          "start": 53.323,
+          "end": 53.392,
+          "index": 141
+        },
+        {
+          "word": "cost",
+          "start": 53.45,
+          "end": 53.682,
+          "index": 142
+        },
+        {
+          "word": "receipt.",
+          "start": 53.741,
+          "end": 54.193,
+          "index": 143
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 54.693,
+      "end": 56.086,
+      "text": "Ten out of ten live tasks",
+      "words": [
+        {
+          "word": "Ten",
+          "start": 54.693,
+          "end": 54.96,
+          "index": 144
+        },
+        {
+          "word": "out",
+          "start": 55.018,
+          "end": 55.122,
+          "index": 145
+        },
+        {
+          "word": "of",
+          "start": 55.157,
+          "end": 55.203,
+          "index": 146
+        },
+        {
+          "word": "ten",
+          "start": 55.25,
+          "end": 55.447,
+          "index": 147
+        },
+        {
+          "word": "live",
+          "start": 55.528,
+          "end": 55.749,
+          "index": 148
+        },
+        {
+          "word": "tasks",
+          "start": 55.784,
+          "end": 56.086,
+          "index": 149
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 56.109,
+      "end": 58.326,
+      "text": "solved, at seventy percent lower cost.",
+      "words": [
+        {
+          "word": "solved,",
+          "start": 56.109,
+          "end": 56.573,
+          "index": 150
+        },
+        {
+          "word": "at",
+          "start": 56.608,
+          "end": 56.771,
+          "index": 151
+        },
+        {
+          "word": "seventy",
+          "start": 56.852,
+          "end": 57.189,
+          "index": 152
+        },
+        {
+          "word": "percent",
+          "start": 57.258,
+          "end": 57.572,
+          "index": 153
+        },
+        {
+          "word": "lower",
+          "start": 57.618,
+          "end": 57.816,
+          "index": 154
+        },
+        {
+          "word": "cost.",
+          "start": 57.874,
+          "end": 58.326,
+          "index": 155
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 58.756,
+      "end": 61.032,
+      "text": "Fast first, grounded on new APIs,",
+      "words": [
+        {
+          "word": "Fast",
+          "start": 58.756,
+          "end": 59.104,
+          "index": 156
+        },
+        {
+          "word": "first,",
+          "start": 59.162,
+          "end": 59.476,
+          "index": 157
+        },
+        {
+          "word": "grounded",
+          "start": 59.522,
+          "end": 59.847,
+          "index": 158
+        },
+        {
+          "word": "on",
+          "start": 59.905,
+          "end": 59.987,
+          "index": 159
+        },
+        {
+          "word": "new",
+          "start": 60.056,
+          "end": 60.196,
+          "index": 160
+        },
+        {
+          "word": "APIs,",
+          "start": 60.254,
+          "end": 61.032,
+          "index": 161
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 61.159,
+      "end": 62.471,
+      "text": "and smart on deep logic.",
+      "words": [
+        {
+          "word": "and",
+          "start": 61.159,
+          "end": 61.31,
+          "index": 162
+        },
+        {
+          "word": "smart",
+          "start": 61.357,
+          "end": 61.612,
+          "index": 163
+        },
+        {
+          "word": "on",
+          "start": 61.647,
+          "end": 61.717,
+          "index": 164
+        },
+        {
+          "word": "deep",
+          "start": 61.763,
+          "end": 61.914,
+          "index": 165
+        },
+        {
+          "word": "logic.",
+          "start": 61.984,
+          "end": 62.471,
+          "index": 166
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 63.145,
+      "end": 63.934,
+      "text": "Mjolnir.",
+      "words": [
+        {
+          "word": "Mjolnir.",
+          "start": 63.145,
+          "end": 63.934,
+          "index": 167
+        }
+      ]
+    }
+  ],
+  "words": [
+    {
+      "word": "Give",
+      "start": 0.45,
+      "end": 0.682,
+      "index": 0
+    },
+    {
+      "word": "a",
+      "start": 0.717,
+      "end": 0.74,
+      "index": 1
+    },
+    {
+      "word": "hundred",
+      "start": 0.856,
+      "end": 1.181,
+      "index": 2
+    },
+    {
+      "word": "real",
+      "start": 1.263,
+      "end": 1.46,
+      "index": 3
+    },
+    {
+      "word": "coding",
+      "start": 1.53,
+      "end": 1.843,
+      "index": 4
+    },
+    {
+      "word": "bugs",
+      "start": 1.901,
+      "end": 2.191,
+      "index": 5
+    },
+    {
+      "word": "to",
+      "start": 2.226,
+      "end": 2.284,
+      "index": 6
+    },
+    {
+      "word": "a",
+      "start": 2.366,
+      "end": 2.389,
+      "index": 7
+    },
+    {
+      "word": "giant",
+      "start": 2.459,
+      "end": 2.714,
+      "index": 8
+    },
+    {
+      "word": "AI",
+      "start": 2.76,
+      "end": 3.039,
+      "index": 9
+    },
+    {
+      "word": "model",
+      "start": 3.097,
+      "end": 3.364,
+      "index": 10
+    },
+    {
+      "word": "alone.",
+      "start": 3.422,
+      "end": 3.933,
+      "index": 11
+    },
+    {
+      "word": "You",
+      "start": 4.363,
+      "end": 4.49,
+      "index": 12
+    },
+    {
+      "word": "pay",
+      "start": 4.548,
+      "end": 4.688,
+      "index": 13
+    },
+    {
+      "word": "fifteen",
+      "start": 4.769,
+      "end": 5.198,
+      "index": 14
+    },
+    {
+      "word": "times",
+      "start": 5.245,
+      "end": 5.535,
+      "index": 15
+    },
+    {
+      "word": "more,",
+      "start": 5.616,
+      "end": 6.034,
+      "index": 16
+    },
+    {
+      "word": "and",
+      "start": 6.185,
+      "end": 6.348,
+      "index": 17
+    },
+    {
+      "word": "seventy",
+      "start": 6.441,
+      "end": 6.835,
+      "index": 18
+    },
+    {
+      "word": "out",
+      "start": 6.882,
+      "end": 6.986,
+      "index": 19
+    },
+    {
+      "word": "of",
+      "start": 7.021,
+      "end": 7.068,
+      "index": 20
+    },
+    {
+      "word": "a",
+      "start": 7.114,
+      "end": 7.137,
+      "index": 21
+    },
+    {
+      "word": "hundred",
+      "start": 7.195,
+      "end": 7.486,
+      "index": 22
+    },
+    {
+      "word": "still",
+      "start": 7.532,
+      "end": 7.753,
+      "index": 23
+    },
+    {
+      "word": "fail",
+      "start": 7.822,
+      "end": 8.031,
+      "index": 24
+    },
+    {
+      "word": "the",
+      "start": 8.101,
+      "end": 8.171,
+      "index": 25
+    },
+    {
+      "word": "moment",
+      "start": 8.217,
+      "end": 8.449,
+      "index": 26
+    },
+    {
+      "word": "a",
+      "start": 8.472,
+      "end": 8.496,
+      "index": 27
+    },
+    {
+      "word": "library",
+      "start": 8.554,
+      "end": 8.914,
+      "index": 28
+    },
+    {
+      "word": "updates",
+      "start": 8.96,
+      "end": 9.297,
+      "index": 29
+    },
+    {
+      "word": "its",
+      "start": 9.332,
+      "end": 9.436,
+      "index": 30
+    },
+    {
+      "word": "code.",
+      "start": 9.483,
+      "end": 9.935,
+      "index": 31
+    },
+    {
+      "word": "Why?",
+      "start": 10.435,
+      "end": 10.969,
+      "index": 32
+    },
+    {
+      "word": "Because",
+      "start": 11.282,
+      "end": 11.596,
+      "index": 33
+    },
+    {
+      "word": "bugs",
+      "start": 11.642,
+      "end": 11.921,
+      "index": 34
+    },
+    {
+      "word": "fail",
+      "start": 11.979,
+      "end": 12.176,
+      "index": 35
+    },
+    {
+      "word": "in",
+      "start": 12.246,
+      "end": 12.304,
+      "index": 36
+    },
+    {
+      "word": "two",
+      "start": 12.35,
+      "end": 12.513,
+      "index": 37
+    },
+    {
+      "word": "very",
+      "start": 12.594,
+      "end": 12.803,
+      "index": 38
+    },
+    {
+      "word": "different",
+      "start": 12.849,
+      "end": 13.105,
+      "index": 39
+    },
+    {
+      "word": "ways.",
+      "start": 13.14,
+      "end": 13.627,
+      "index": 40
+    },
+    {
+      "word": "Either",
+      "start": 14.127,
+      "end": 14.382,
+      "index": 41
+    },
+    {
+      "word": "a",
+      "start": 14.452,
+      "end": 14.487,
+      "index": 42
+    },
+    {
+      "word": "brand-new",
+      "start": 14.556,
+      "end": 14.998,
+      "index": 43
+    },
+    {
+      "word": "API",
+      "start": 15.067,
+      "end": 15.532,
+      "index": 44
+    },
+    {
+      "word": "changed",
+      "start": 15.613,
+      "end": 15.903,
+      "index": 45
+    },
+    {
+      "word": "after",
+      "start": 15.938,
+      "end": 16.124,
+      "index": 46
+    },
+    {
+      "word": "training,",
+      "start": 16.17,
+      "end": 16.716,
+      "index": 47
+    },
+    {
+      "word": "or",
+      "start": 16.983,
+      "end": 17.122,
+      "index": 48
+    },
+    {
+      "word": "the",
+      "start": 17.169,
+      "end": 17.238,
+      "index": 49
+    },
+    {
+      "word": "math",
+      "start": 17.308,
+      "end": 17.54,
+      "index": 50
+    },
+    {
+      "word": "logic",
+      "start": 17.598,
+      "end": 17.889,
+      "index": 51
+    },
+    {
+      "word": "itself",
+      "start": 17.935,
+      "end": 18.26,
+      "index": 52
+    },
+    {
+      "word": "is",
+      "start": 18.318,
+      "end": 18.399,
+      "index": 53
+    },
+    {
+      "word": "hard.",
+      "start": 18.469,
+      "end": 18.945,
+      "index": 54
+    },
+    {
+      "word": "Searching",
+      "start": 19.444,
+      "end": 19.827,
+      "index": 55
+    },
+    {
+      "word": "the",
+      "start": 19.885,
+      "end": 19.955,
+      "index": 56
+    },
+    {
+      "word": "web",
+      "start": 20.002,
+      "end": 20.187,
+      "index": 57
+    },
+    {
+      "word": "on",
+      "start": 20.257,
+      "end": 20.338,
+      "index": 58
+    },
+    {
+      "word": "every",
+      "start": 20.431,
+      "end": 20.687,
+      "index": 59
+    },
+    {
+      "word": "task",
+      "start": 20.745,
+      "end": 21.093,
+      "index": 60
+    },
+    {
+      "word": "pollutes",
+      "start": 21.139,
+      "end": 21.511,
+      "index": 61
+    },
+    {
+      "word": "pure",
+      "start": 21.627,
+      "end": 21.917,
+      "index": 62
+    },
+    {
+      "word": "math.",
+      "start": 21.964,
+      "end": 22.416,
+      "index": 63
+    },
+    {
+      "word": "Meet",
+      "start": 22.997,
+      "end": 23.206,
+      "index": 64
+    },
+    {
+      "word": "Mjolnir.",
+      "start": 23.252,
+      "end": 23.844,
+      "index": 65
+    },
+    {
+      "word": "Every",
+      "start": 24.425,
+      "end": 24.704,
+      "index": 66
+    },
+    {
+      "word": "task",
+      "start": 24.75,
+      "end": 25.064,
+      "index": 67
+    },
+    {
+      "word": "runs",
+      "start": 25.133,
+      "end": 25.365,
+      "index": 68
+    },
+    {
+      "word": "first",
+      "start": 25.447,
+      "end": 25.749,
+      "index": 69
+    },
+    {
+      "word": "on",
+      "start": 25.807,
+      "end": 25.934,
+      "index": 70
+    },
+    {
+      "word": "fast",
+      "start": 26.05,
+      "end": 26.41,
+      "index": 71
+    },
+    {
+      "word": "NVIDIA",
+      "start": 26.48,
+      "end": 26.933,
+      "index": 72
+    },
+    {
+      "word": "Nemotron",
+      "start": 27.002,
+      "end": 27.478,
+      "index": 73
+    },
+    {
+      "word": "Nano",
+      "start": 27.536,
+      "end": 27.873,
+      "index": 74
+    },
+    {
+      "word": "on",
+      "start": 27.954,
+      "end": 28.059,
+      "index": 75
+    },
+    {
+      "word": "Nebius,",
+      "start": 28.117,
+      "end": 28.755,
+      "index": 76
+    },
+    {
+      "word": "checked",
+      "start": 29.023,
+      "end": 29.324,
+      "index": 77
+    },
+    {
+      "word": "by",
+      "start": 29.348,
+      "end": 29.464,
+      "index": 78
+    },
+    {
+      "word": "a",
+      "start": 29.522,
+      "end": 29.545,
+      "index": 79
+    },
+    {
+      "word": "locked,",
+      "start": 29.638,
+      "end": 30.033,
+      "index": 80
+    },
+    {
+      "word": "un-cheatable",
+      "start": 30.114,
+      "end": 30.811,
+      "index": 81
+    },
+    {
+      "word": "unit",
+      "start": 30.904,
+      "end": 31.148,
+      "index": 82
+    },
+    {
+      "word": "test.",
+      "start": 31.182,
+      "end": 31.635,
+      "index": 83
+    },
+    {
+      "word": "Missing",
+      "start": 32.065,
+      "end": 32.39,
+      "index": 84
+    },
+    {
+      "word": "a",
+      "start": 32.436,
+      "end": 32.459,
+      "index": 85
+    },
+    {
+      "word": "new",
+      "start": 32.518,
+      "end": 32.634,
+      "index": 86
+    },
+    {
+      "word": "API?",
+      "start": 32.68,
+      "end": 33.295,
+      "index": 87
+    },
+    {
+      "word": "Tavily",
+      "start": 33.609,
+      "end": 34.027,
+      "index": 88
+    },
+    {
+      "word": "pulls",
+      "start": 34.073,
+      "end": 34.294,
+      "index": 89
+    },
+    {
+      "word": "live",
+      "start": 34.375,
+      "end": 34.642,
+      "index": 90
+    },
+    {
+      "word": "docs",
+      "start": 34.677,
+      "end": 34.967,
+      "index": 91
+    },
+    {
+      "word": "in",
+      "start": 35.002,
+      "end": 35.072,
+      "index": 92
+    },
+    {
+      "word": "three",
+      "start": 35.118,
+      "end": 35.327,
+      "index": 93
+    },
+    {
+      "word": "stages.",
+      "start": 35.362,
+      "end": 36.001,
+      "index": 94
+    },
+    {
+      "word": "Hard",
+      "start": 36.268,
+      "end": 36.523,
+      "index": 95
+    },
+    {
+      "word": "logic",
+      "start": 36.581,
+      "end": 36.906,
+      "index": 96
+    },
+    {
+      "word": "bug?",
+      "start": 36.964,
+      "end": 37.394,
+      "index": 97
+    },
+    {
+      "word": "Skip",
+      "start": 37.765,
+      "end": 38.055,
+      "index": 98
+    },
+    {
+      "word": "search",
+      "start": 38.148,
+      "end": 38.45,
+      "index": 99
+    },
+    {
+      "word": "and",
+      "start": 38.532,
+      "end": 38.682,
+      "index": 100
+    },
+    {
+      "word": "step",
+      "start": 38.74,
+      "end": 38.984,
+      "index": 101
+    },
+    {
+      "word": "up",
+      "start": 39.054,
+      "end": 39.147,
+      "index": 102
+    },
+    {
+      "word": "to",
+      "start": 39.205,
+      "end": 39.263,
+      "index": 103
+    },
+    {
+      "word": "Super",
+      "start": 39.356,
+      "end": 39.716,
+      "index": 104
+    },
+    {
+      "word": "or",
+      "start": 39.797,
+      "end": 39.913,
+      "index": 105
+    },
+    {
+      "word": "Ultra.",
+      "start": 39.983,
+      "end": 40.517,
+      "index": 106
+    },
+    {
+      "word": "Testing",
+      "start": 40.83,
+      "end": 41.306,
+      "index": 107
+    },
+    {
+      "word": "the",
+      "start": 41.364,
+      "end": 41.434,
+      "index": 108
+    },
+    {
+      "word": "app",
+      "start": 41.515,
+      "end": 41.736,
+      "index": 109
+    },
+    {
+      "word": "takes",
+      "start": 41.794,
+      "end": 42.026,
+      "index": 110
+    },
+    {
+      "word": "one",
+      "start": 42.107,
+      "end": 42.351,
+      "index": 111
+    },
+    {
+      "word": "click.",
+      "start": 42.398,
+      "end": 42.827,
+      "index": 112
+    },
+    {
+      "word": "Open",
+      "start": 43.257,
+      "end": 43.57,
+      "index": 113
+    },
+    {
+      "word": "the",
+      "start": 43.617,
+      "end": 43.686,
+      "index": 114
+    },
+    {
+      "word": "live",
+      "start": 43.744,
+      "end": 43.977,
+      "index": 115
+    },
+    {
+      "word": "Workbench,",
+      "start": 44.011,
+      "end": 44.673,
+      "index": 116
+    },
+    {
+      "word": "pick",
+      "start": 44.871,
+      "end": 45.103,
+      "index": 117
+    },
+    {
+      "word": "any",
+      "start": 45.196,
+      "end": 45.416,
+      "index": 118
+    },
+    {
+      "word": "broken",
+      "start": 45.474,
+      "end": 45.811,
+      "index": 119
+    },
+    {
+      "word": "task,",
+      "start": 45.869,
+      "end": 46.391,
+      "index": 120
+    },
+    {
+      "word": "and",
+      "start": 46.449,
+      "end": 46.612,
+      "index": 121
+    },
+    {
+      "word": "hit",
+      "start": 46.682,
+      "end": 46.856,
+      "index": 122
+    },
+    {
+      "word": "Run.",
+      "start": 46.937,
+      "end": 47.378,
+      "index": 123
+    },
+    {
+      "word": "Watch",
+      "start": 47.808,
+      "end": 48.121,
+      "index": 124
+    },
+    {
+      "word": "the",
+      "start": 48.191,
+      "end": 48.272,
+      "index": 125
+    },
+    {
+      "word": "locked",
+      "start": 48.353,
+      "end": 48.632,
+      "index": 126
+    },
+    {
+      "word": "test",
+      "start": 48.655,
+      "end": 48.957,
+      "index": 127
+    },
+    {
+      "word": "catch",
+      "start": 49.027,
+      "end": 49.294,
+      "index": 128
+    },
+    {
+      "word": "the",
+      "start": 49.352,
+      "end": 49.445,
+      "index": 129
+    },
+    {
+      "word": "exact",
+      "start": 49.526,
+      "end": 49.956,
+      "index": 130
+    },
+    {
+      "word": "error,",
+      "start": 50.014,
+      "end": 50.49,
+      "index": 131
+    },
+    {
+      "word": "route",
+      "start": 50.803,
+      "end": 51.047,
+      "index": 132
+    },
+    {
+      "word": "the",
+      "start": 51.07,
+      "end": 51.14,
+      "index": 133
+    },
+    {
+      "word": "fix,",
+      "start": 51.198,
+      "end": 51.674,
+      "index": 134
+    },
+    {
+      "word": "and",
+      "start": 51.848,
+      "end": 51.987,
+      "index": 135
+    },
+    {
+      "word": "print",
+      "start": 52.045,
+      "end": 52.208,
+      "index": 136
+    },
+    {
+      "word": "a",
+      "start": 52.243,
+      "end": 52.266,
+      "index": 137
+    },
+    {
+      "word": "verified",
+      "start": 52.324,
+      "end": 52.765,
+      "index": 138
+    },
+    {
+      "word": "git",
+      "start": 52.812,
+      "end": 53.021,
+      "index": 139
+    },
+    {
+      "word": "diff",
+      "start": 53.079,
+      "end": 53.276,
+      "index": 140
+    },
+    {
+      "word": "and",
+      "start": 53.323,
+      "end": 53.392,
+      "index": 141
+    },
+    {
+      "word": "cost",
+      "start": 53.45,
+      "end": 53.682,
+      "index": 142
+    },
+    {
+      "word": "receipt.",
+      "start": 53.741,
+      "end": 54.193,
+      "index": 143
+    },
+    {
+      "word": "Ten",
+      "start": 54.693,
+      "end": 54.96,
+      "index": 144
+    },
+    {
+      "word": "out",
+      "start": 55.018,
+      "end": 55.122,
+      "index": 145
+    },
+    {
+      "word": "of",
+      "start": 55.157,
+      "end": 55.203,
+      "index": 146
+    },
+    {
+      "word": "ten",
+      "start": 55.25,
+      "end": 55.447,
+      "index": 147
+    },
+    {
+      "word": "live",
+      "start": 55.528,
+      "end": 55.749,
+      "index": 148
+    },
+    {
+      "word": "tasks",
+      "start": 55.784,
+      "end": 56.086,
+      "index": 149
+    },
+    {
+      "word": "solved,",
+      "start": 56.109,
+      "end": 56.573,
+      "index": 150
+    },
+    {
+      "word": "at",
+      "start": 56.608,
+      "end": 56.771,
+      "index": 151
+    },
+    {
+      "word": "seventy",
+      "start": 56.852,
+      "end": 57.189,
+      "index": 152
+    },
+    {
+      "word": "percent",
+      "start": 57.258,
+      "end": 57.572,
+      "index": 153
+    },
+    {
+      "word": "lower",
+      "start": 57.618,
+      "end": 57.816,
+      "index": 154
+    },
+    {
+      "word": "cost.",
+      "start": 57.874,
+      "end": 58.326,
+      "index": 155
+    },
+    {
+      "word": "Fast",
+      "start": 58.756,
+      "end": 59.104,
+      "index": 156
+    },
+    {
+      "word": "first,",
+      "start": 59.162,
+      "end": 59.476,
+      "index": 157
+    },
+    {
+      "word": "grounded",
+      "start": 59.522,
+      "end": 59.847,
+      "index": 158
+    },
+    {
+      "word": "on",
+      "start": 59.905,
+      "end": 59.987,
+      "index": 159
+    },
+    {
+      "word": "new",
+      "start": 60.056,
+      "end": 60.196,
+      "index": 160
+    },
+    {
+      "word": "APIs,",
+      "start": 60.254,
+      "end": 61.032,
+      "index": 161
+    },
+    {
+      "word": "and",
+      "start": 61.159,
+      "end": 61.31,
+      "index": 162
+    },
+    {
+      "word": "smart",
+      "start": 61.357,
+      "end": 61.612,
+      "index": 163
+    },
+    {
+      "word": "on",
+      "start": 61.647,
+      "end": 61.717,
+      "index": 164
+    },
+    {
+      "word": "deep",
+      "start": 61.763,
+      "end": 61.914,
+      "index": 165
+    },
+    {
+      "word": "logic.",
+      "start": 61.984,
+      "end": 62.471,
+      "index": 166
+    },
+    {
+      "word": "Mjolnir.",
+      "start": 63.145,
+      "end": 63.934,
+      "index": 167
+    }
+  ]
+}

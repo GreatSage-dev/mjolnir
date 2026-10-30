@@ -1,0 +1,470 @@
+[
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "nav-item",
+    "text": "Split-screen assay\n10",
+    "nav": "all",
+    "taskId": null,
+    "rect": {
+      "x": 12,
+      "y": 102,
+      "width": 204,
+      "height": 32,
+      "top": 102,
+      "right": 216,
+      "bottom": 134,
+      "left": 12
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "nav-item",
+    "text": "2026 API shifts\n6",
+    "nav": "api_shift",
+    "taskId": null,
+    "rect": {
+      "x": 12,
+      "y": 136,
+      "width": 204,
+      "height": 32,
+      "top": 136,
+      "right": 216,
+      "bottom": 168,
+      "left": 12
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "nav-item",
+    "text": "Logic invariants\n4",
+    "nav": "logic_invariant",
+    "taskId": null,
+    "rect": {
+      "x": 12,
+      "y": 170,
+      "width": 204,
+      "height": 32,
+      "top": 170,
+      "right": 216,
+      "bottom": 202,
+      "left": 12
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "openCustomBtn",
+    "cls": "nav-item",
+    "text": "Custom code sandbox",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 12,
+      "y": 248,
+      "width": 204,
+      "height": 32,
+      "top": 248,
+      "right": 216,
+      "bottom": 280,
+      "left": 12
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "openKeysBtn",
+    "cls": "nav-item",
+    "text": "Configure API keys",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 12,
+      "y": 282,
+      "width": 204,
+      "height": 32,
+      "top": 282,
+      "right": 216,
+      "bottom": 314,
+      "left": 12
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "menuToggleBtn",
+    "cls": "menu-toggle",
+    "text": "Menu",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  {
+    "tag": "SELECT",
+    "id": "taskSelect",
+    "cls": "input",
+    "text": "SchemaGuard v3: Post-Cutoff Validator Decorator & Dump API\nN",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 276.421875,
+      "y": 8,
+      "width": 433,
+      "height": 32,
+      "top": 8,
+      "right": 709.421875,
+      "bottom": 40,
+      "left": 276.421875
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "topKeysBtn",
+    "cls": "btn",
+    "text": "API keys",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1345,
+      "y": 8,
+      "width": 71,
+      "height": 32,
+      "top": 8,
+      "right": 1416,
+      "bottom": 40,
+      "left": 1345
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "dismissAlertBtn",
+    "cls": "btn",
+    "text": "Dismiss",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  {
+    "tag": "SELECT",
+    "id": "baselineSelect",
+    "cls": "input",
+    "text": "Nemotron-Ultra (Bare)\nNemotron-Nano (Bare)\nUltra + Always-On",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1038.9375,
+      "y": 73,
+      "width": 194,
+      "height": 32,
+      "top": 73,
+      "right": 1232.9375,
+      "bottom": 105,
+      "left": 1038.9375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "runRaceBtn",
+    "cls": "btn primary",
+    "text": "Run split-screen assay",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1240.9375,
+      "y": 73,
+      "width": 166.0625,
+      "height": 32,
+      "top": 73,
+      "right": 1407,
+      "bottom": 105,
+      "left": 1240.9375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "kpi",
+    "text": "Mjolnir 2D Escalation\n100.0%10/10\n$0.001574 / fix \u00b7 -69.8% v",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 260,
+      "y": 168.796875,
+      "width": 228,
+      "height": 119.59375,
+      "top": 168.796875,
+      "right": 488,
+      "bottom": 288.390625,
+      "left": 260
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "kpi",
+    "text": "Ultra + Always-On Tavily\n90.0%9/10\n$0.005218 / fix \u00b7 3/4 on ",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 488,
+      "y": 168.796875,
+      "width": 228,
+      "height": 119.59375,
+      "top": 168.796875,
+      "right": 716,
+      "bottom": 288.390625,
+      "left": 488
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "kpi",
+    "text": "Nemotron-Nano + Tavily\n80.0%8/10\n$0.002600 / fix \u00b7 5/6 on AP",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 716,
+      "y": 168.796875,
+      "width": 228,
+      "height": 119.59375,
+      "top": 168.796875,
+      "right": 944,
+      "bottom": 288.390625,
+      "left": 716
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "kpi",
+    "text": "Nemotron-Ultra (Bare)\n30.0%3/10\n0/6 on 2026 APIs \u00b7 $0.011052",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 944,
+      "y": 168.796875,
+      "width": 228,
+      "height": 119.59375,
+      "top": 168.796875,
+      "right": 1172,
+      "bottom": 288.390625,
+      "left": 944
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "kpi",
+    "text": "Nemotron-Nano (Bare)\n30.0%3/10\n$0.000143 / fix \u00b7 1-shot prob",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1172,
+      "y": 168.796875,
+      "width": 228,
+      "height": 119.59375,
+      "top": 168.796875,
+      "right": 1400,
+      "bottom": 288.390625,
+      "left": 1172
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "tab-btn",
+    "text": "Unified Git Diff",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 954.5,
+      "y": 579.1875,
+      "width": 90.234375,
+      "height": 34,
+      "top": 579.1875,
+      "right": 1044.734375,
+      "bottom": 613.1875,
+      "left": 954.5
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "tab-btn",
+    "text": "Tavily 3-Stage",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1062.734375,
+      "y": 579.1875,
+      "width": 86.859375,
+      "height": 34,
+      "top": 579.1875,
+      "right": 1149.59375,
+      "bottom": 613.1875,
+      "left": 1062.734375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "tab-btn",
+    "text": "3-Line Error",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1167.59375,
+      "y": 579.1875,
+      "width": 74.765625,
+      "height": 34,
+      "top": 579.1875,
+      "right": 1242.359375,
+      "bottom": 613.1875,
+      "left": 1167.59375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "",
+    "cls": "tab-btn",
+    "text": "Locked Test",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1260.359375,
+      "y": 579.1875,
+      "width": 74.75,
+      "height": 34,
+      "top": 579.1875,
+      "right": 1335.109375,
+      "bottom": 613.1875,
+      "left": 1260.359375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "openCustomInlineBtn",
+    "cls": "btn",
+    "text": "Test custom Python",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1083.3125,
+      "y": 841.984375,
+      "width": 149.046875,
+      "height": 32,
+      "top": 841.984375,
+      "right": 1232.359375,
+      "bottom": 873.984375,
+      "left": 1083.3125
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "rerunSuiteBtn",
+    "cls": "btn",
+    "text": "Re-verify all 5 arms",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 1240.359375,
+      "y": 841.984375,
+      "width": 147.640625,
+      "height": 32,
+      "top": 841.984375,
+      "right": 1388,
+      "bottom": 873.984375,
+      "left": 1240.359375
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "closeKeysBtn",
+    "cls": "btn",
+    "text": "Close",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "saveKeysBtn",
+    "cls": "btn primary",
+    "text": "Save keys",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "closeCustomBtn",
+    "cls": "btn",
+    "text": "Close",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  },
+  {
+    "tag": "BUTTON",
+    "id": "runCustomSubmitBtn",
+    "cls": "btn primary",
+    "text": "Execute in locked sandbox",
+    "nav": null,
+    "taskId": null,
+    "rect": {
+      "x": 0,
+      "y": 0,
+      "width": 0,
+      "height": 0,
+      "top": 0,
+      "right": 0,
+      "bottom": 0,
+      "left": 0
+    }
+  }
+]

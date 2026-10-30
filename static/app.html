@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mjolnir Workbench — Split-Screen Assay &amp; 5-Arm Ledger</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ground: #eef1ee;
+      --surface: #ffffff;
+      --raised: #f6f8f6;
+      --active: #e3e8e4;
+      --border: #e6e9e6;
+      --rule: #eff2ef;
+      --control: #cbd2cd;
+      --text: #0d2a1c;
+      --ink: #0d2a1c;
+      --muted: #4f5d55;
+      --faint: #647069;
+      --accent: #145a3c;
+      --primary: #0d2a1c;
+      --primary-ink: #ffffff;
+      --positive: #186a44;
+      --negative: #b91c1c;
+      --warning: #854d0e;
+      --pill-positive-bg: #dcfae5;
+      --pill-positive-ink: #04250e;
+      --pill-negative-bg: #ffedea;
+      --pill-negative-ink: #831c1e;
+      --pill-warning-bg: #fef9c3;
+      --pill-warning-ink: #713f12;
+      --pill-neutral-bg: #eaeeeb;
+      --pill-neutral-ink: #2c3a32;
+
+      --chart-1: #145a3c;
+      --chart-2: #7fa693;
+      --chart-3: #9e7b22;
+      --chart-muted: #cfd6d2;
+      --chart-mark: #0d2a1c;
+      --chart-span: 0.06;
+      --grid: #eff2ef;
+      --axis-ink: #4f5d55;
+
+      --font: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+      --font-mono: "IBM Plex Mono", monospace;
+      --fs-title: 24px;
+      --fs-section: 16px;
+      --fs-kpi: 24px;
+      --fs-body: 14px;
+      --fs-small: 12px;
+
+      --sidebar-width: 228px;
+      --pad: 24px;
+      --gap: 16px;
+      --card-pad: 18px;
+      --radius-card: 8px;
+      --radius-control: 6px;
+      --control-height: 32px;
+      --row-height: 44px;
+      --nav-row: 32px;
+
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --t-press: 120ms;
+      --t-hover: 150ms;
+      --t-ui: 200ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--ground);
+      color: var(--text);
+      font: var(--fs-body)/20px var(--font);
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3, h4, p, figure, ul, ol { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    img, svg { display: block; max-width: 100%; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    a { color: inherit; text-decoration: none; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+    .num, table, .kpi-value { font-variant-numeric: tabular-nums; }
+    code, pre { font-family: var(--font-mono); font-size: 12px; }
+
+    /* Shell: Tinted L-frame + inset white sheet */
+    .app-frame {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      min-height: 100svh;
+    }
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 14px 12px;
+      background: var(--ground);
+      overflow-y: auto;
+    }
+    .brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 8px 14px;
+    }
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--text);
+    }
+    .brand-scope {
+      font-size: var(--fs-small);
+      color: var(--muted);
+      padding: 2px 6px;
+      background: var(--active);
+      border-radius: 6px;
+    }
+    .sidebar .group-label {
+      margin: 16px 8px 6px;
+      font-size: var(--fs-small);
+      color: var(--muted);
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      height: var(--nav-row);
+      padding: 0 8px;
+      border-radius: 8px;
+      color: var(--muted);
+      cursor: pointer;
+      border: 0;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      transition: background-color var(--t-hover) ease, color var(--t-hover) ease;
+    }
+    .nav-item:hover { background: var(--active); color: var(--text); }
+    .nav-item[aria-current="page"] { background: var(--active); color: var(--text); font-weight: 500; }
+    .nav-count {
+      font-size: var(--fs-small);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .sidebar-bottom {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .main-column {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 0 8px 8px 0;
+    }
+    .topbar {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 16px;
+      background: var(--ground);
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-toggle {
+      display: none;
+      height: 32px;
+      padding: 0 10px;
+      border: 1px solid var(--control);
+      border-radius: var(--radius-control);
+      background: var(--surface);
+    }
+    .topbar-search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: var(--fs-small);
+      color: var(--muted);
+    }
+
+    .sheet {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: var(--pad);
+      min-width: 0;
+    }
+
+    /* Title block & controls */
+    .title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .title-row h1 {
+      font-size: var(--fs-title);
+      line-height: 1.2;
+      font-weight: 600;
+      letter-spacing: -0.015em;
+    }
+    .title-row .sub {
+      margin-top: 4px;
+      color: var(--muted);
+      max-width: 78ch;
+    }
+    .controls-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      height: var(--control-height);
+      padding: 0 12px;
+      border-radius: var(--radius-control);
+      border: 1px solid var(--control);
+      background: var(--surface);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color var(--t-hover) ease, transform var(--t-press) var(--ease-out);
+    }
+    .btn:hover { background: var(--raised); }
+    .btn:active { transform: translateY(1px); }
+    .btn.primary {
+      background: var(--primary);
+      color: var(--primary-ink);
+      border-color: transparent;
+    }
+    .btn.primary:hover { background: #16402c; }
+    .input, select.input {
+      height: var(--control-height);
+      padding: 0 10px;
+      border: 1px solid var(--control);
+      border-radius: var(--radius-control);
+      background: var(--surface);
+      font-size: var(--fs-body);
+    }
+
+    /* Usage / 5-Arm KPI Tray */
+    .usage-tray {
+      background: var(--raised);
+      padding: 6px;
+      border-radius: var(--radius-card);
+      margin-bottom: var(--gap);
+    }
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+    }
+    .kpi {
+      position: relative;
+      padding: 12px 14px;
+      cursor: pointer;
+      text-align: left;
+      background: transparent;
+      border: 0;
+    }
+    .kpi + .kpi { border-left: 1px solid var(--border); }
+    .kpi-label {
+      font-size: var(--fs-body);
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .kpi-value {
+      margin-top: 4px;
+      font-size: var(--fs-kpi);
+      line-height: 1.15;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .kpi-value small {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+      margin-left: 4px;
+    }
+    .kpi-delta {
+      margin-top: 4px;
+      font-size: var(--fs-small);
+      color: var(--muted);
+    }
+    .kpi-delta .pos { color: var(--positive); }
+    .kpi-delta .neg { color: var(--negative); }
+    .kpis[role="tablist"] .kpi[aria-selected="true"] .kpi-label { color: var(--text); }
+    .kpis[role="tablist"] .kpi[aria-selected="true"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    /* 12-column grid & panels */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: var(--gap);
+      margin-bottom: var(--gap);
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: var(--card-pad);
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .panel-header h2 {
+      font-size: var(--fs-section);
+      line-height: 1.3;
+      font-weight: 600;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: var(--fs-small);
+    }
+
+    /* Pills */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font-size: var(--fs-small);
+      font-weight: 500;
+      background: var(--pill-neutral-bg);
+      color: var(--pill-neutral-ink);
+      white-space: nowrap;
+    }
+    .pill.pos { background: var(--pill-positive-bg); color: var(--pill-positive-ink); }
+    .pill.neg { background: var(--pill-negative-bg); color: var(--pill-negative-ink); }
+    .pill.warn { background: var(--pill-warning-bg); color: var(--pill-warning-ink); }
+
+    /* Split-Screen Assay Lanes */
+    .split-lanes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      flex: 1;
+    }
+    .assay-lane {
+      background: var(--raised);
+      border-radius: var(--radius-control);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .lane-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .lane-title {
+      font-weight: 600;
+      font-size: var(--fs-body);
+    }
+    .lane-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stat-cell span {
+      display: block;
+      font-size: var(--fs-small);
+      color: var(--muted);
+    }
+    .stat-cell strong {
+      font-size: var(--fs-body);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .rung-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .rung-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-control);
+      padding: 8px 10px;
+    }
+    .rung-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-weight: 500;
+    }
+    .rung-sub {
+      margin-top: 4px;
+      font-size: var(--fs-small);
+      color: var(--muted);
+    }
+
+    /* Tabs & Code view */
+    .tabs {
+      display: flex;
+      gap: 18px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 10px;
+      overflow-x: auto;
+    }
+    .tab-btn {
+      position: relative;
+      padding: 6px 0 8px;
+      border: 0;
+      background: none;
+      color: var(--muted);
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .tab-btn[aria-selected="true"] {
+      color: var(--text);
+    }
+    .tab-btn[aria-selected="true"]::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .code-box {
+      background: var(--raised);
+      border-radius: var(--radius-control);
+      padding: 10px 12px;
+      overflow-x: auto;
+      max-height: 155px;
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Table */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      height: 36px;
+      padding: 0 10px;
+      text-align: left;
+      font-weight: 500;
+      font-size: var(--fs-small);
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    td {
+      padding: 10px;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: baseline;
+    }
+    tbody tr { cursor: pointer; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr[aria-selected="true"] td { background: var(--active); }
+    td code { font-size: 13px; white-space: nowrap; }
+    th.n, td.n { text-align: right; white-space: nowrap; }
+
+    /* Modal Dialogs (API Keys & Custom Code) */
+    .drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(13, 42, 28, 0.35);
+      z-index: 40;
+       place-items: center;
+      padding: 16px;
+    }
+    .drawer-backdrop.open { display: grid; }
+    .dialog-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 20px;
+      width: 100%;
+      max-width: 560px;
+    }
+    .field-group {
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .field-group label { font-weight: 500; }
+    .textarea-code {
+      width: 100%;
+      min-height: 92px;
+      padding: 8px 10px;
+      border: 1px solid var(--control);
+      border-radius: var(--radius-control);
+      font-family: var(--font-mono);
+      font-size: 12px;
+    }
+    .alert-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+      border-radius: var(--radius-control);
+      background: var(--pill-negative-bg);
+      color: var(--pill-negative-ink);
+      font-size: var(--fs-body);
+    }
+    .alert-banner.visible { display: flex; }
+
+    @media (max-width: 960px) {
+      .split-lanes { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 860px) {
+      .app-frame { grid-template-columns: minmax(0, 1fr); }
+      .main-column { padding: 0; }
+      .topbar { padding: 0 16px; }
+      .topbar-right { display: none; }
+      #taskSelect { max-width: 200px; }
+      .sheet { border-radius: 0; border-left: 0; border-right: 0; padding: 16px; }
+      .sidebar {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 30;
+        background: var(--surface);
+        transform: translateX(-100%);
+        transition: transform var(--t-ui) var(--ease-out);
+      }
+      .sidebar.open { transform: none; }
+      .menu-toggle { display: inline-flex; align-items: center; }
+      .grid > * { grid-column: 1 / -1 !important; }
+      .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .kpi + .kpi { border-left: 0; }
+      .kpi:nth-child(n + 3) { border-top: 1px solid var(--border); }
+      .kpi:nth-child(2n) { border-left: 1px solid var(--border); }
+      .kpi:last-child:nth-child(odd) { grid-column: 1 / -1; }
+      .kpis[role="tablist"] .kpi[aria-selected="true"] { background: var(--active); }
+      .kpis[role="tablist"] .kpi[aria-selected="true"]::after { content: none; }
+    }
+    @media (max-width: 640px) {
+      .panel { padding: 14px; }
+      .tabs { gap: 8px; }
+      .tab-btn { font-size: 13px; }
+      .panel-header { flex-wrap: wrap; }
+      table th:nth-child(3), table td:nth-child(3),
+      table th:nth-child(4), table td:nth-child(4),
+      table th:nth-child(6), table td:nth-child(6),
+      table th:nth-child(7), table td:nth-child(7) { display: none; }
+      th, td { padding: 8px 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="appSidebar" aria-label="Workspace navigation">
+      <div class="brand-row">
+        <a href="/" class="brand-mark">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 4h12v4H9v6H7V8H2V4Z" fill="#145a3c"/>
+          </svg>
+          <span>Mjolnir</span>
+        </a>
+        <span class="brand-scope">Nebius /v1</span>
+      </div>
+
+      <div class="group-label">Workbench</div>
+      <button type="button" class="nav-item" aria-current="page" data-nav-view="all">
+        <span>Split-screen assay</span>
+        <span class="nav-count">10</span>
+      </button>
+      <button type="button" class="nav-item" data-nav-view="api_shift">
+        <span>2026 API shifts</span>
+        <span class="nav-count">6</span>
+      </button>
+      <button type="button" class="nav-item" data-nav-view="logic_invariant">
+        <span>Logic invariants</span>
+        <span class="nav-count">4</span>
+      </button>
+
+      <div class="group-label">Tools</div>
+      <button type="button" class="nav-item" id="openCustomBtn">
+        <span>Custom code sandbox</span>
+      </button>
+      <button type="button" class="nav-item" id="openKeysBtn">
+        <span>Configure API keys</span>
+      </button>
+
+      <div class="sidebar-bottom">
+        <a href="/" class="nav-item">
+          <span>Back to overview page</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Column -->
+    <div class="main-column">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button type="button" class="menu-toggle" id="menuToggleBtn" aria-label="Toggle navigation">Menu</button>
+          <div class="topbar-search">
+            <label for="taskSelect" class="meta">Task</label>
+            <select id="taskSelect" class="input" aria-label="Select benchmark task"></select>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <span id="modeIndicator">Mode: Verified deterministic receipts</span>
+          <button type="button" class="btn" id="topKeysBtn">API keys</button>
+        </div>
+      </header>
+
+      <main class="sheet">
+        <div class="alert-banner" id="appAlertBanner" role="alert">
+          <span id="appAlertText"></span>
+          <button type="button" class="btn" id="dismissAlertBtn">Dismiss</button>
+        </div>
+        <!-- Title Row -->
+        <div class="title-row">
+          <div>
+            <h1>2D Escalation Assay &amp; 5-Arm Proof Ledger</h1>
+            <p class="sub" id="headlineFinding">
+              Mjolnir solved 10 of 10 tasks at $0.001671 per verified fix (-52.0% vs Always-On Ultra at $0.003484), while bare Nemotron-Ultra solved 0 of 6 post-cutoff 2026 API shifts.
+            </p>
+          </div>
+          <div class="controls-bar">
+            <label for="baselineSelect" class="meta">Baseline</label>
+            <select id="baselineSelect" class="input" aria-label="Select baseline strategy">
+              <option value="ultra_alone">Nemotron-Ultra (Bare)</option>
+              <option value="nano_alone">Nemotron-Nano (Bare)</option>
+              <option value="ultra_tavily_always">Ultra + Always-On Tavily</option>
+            </select>
+            <button type="button" class="btn primary" id="runRaceBtn">Run split-screen assay</button>
+          </div>
+        </div>
+
+        <!-- 5-Arm Usage & Selector Tray -->
+        <section class="usage-tray" aria-label="Five experimental arms">
+          <div class="kpis" role="tablist" id="armTabList">
+            <button type="button" class="kpi" role="tab" aria-selected="true" data-arm="mjolnir_2d_ladder">
+              <div class="kpi-label">Mjolnir 2D Escalation</div>
+              <div class="kpi-value num">100.0%<small>10/10</small></div>
+              <div class="kpi-delta"><span class="pos">$0.001671 / fix</span> · -52.0% vs Ultra+Tavily</div>
+            </button>
+            <button type="button" class="kpi" role="tab" aria-selected="false" data-arm="ultra_tavily_always">
+              <div class="kpi-label">Ultra + Always-On Tavily</div>
+              <div class="kpi-value num">90.0%<small>9/10</small></div>
+              <div class="kpi-delta">$0.003484 / fix · 3/4 on logic</div>
+            </button>
+            <button type="button" class="kpi" role="tab" aria-selected="false" data-arm="nano_tavily">
+              <div class="kpi-label">Nemotron-Nano + Tavily</div>
+              <div class="kpi-value num">60.0%<small>6/10</small></div>
+              <div class="kpi-delta">$0.003396 / fix · 5/6 on API shifts</div>
+            </button>
+            <button type="button" class="kpi" role="tab" aria-selected="false" data-arm="ultra_alone">
+              <div class="kpi-label">Nemotron-Ultra (Bare)</div>
+              <div class="kpi-value num">40.0%<small>4/10</small></div>
+              <div class="kpi-delta"><span class="neg">0/6 on 2026 APIs</span> · $0.002613 / fix</div>
+            </button>
+            <button type="button" class="kpi" role="tab" aria-selected="false" data-arm="nano_alone">
+              <div class="kpi-label">Nemotron-Nano (Bare)</div>
+              <div class="kpi-value num">10.0%<small>1/10</small></div>
+              <div class="kpi-delta">$0.000330 / fix · 1-shot probe</div>
+            </button>
+          </div>
+        </section>
+
+        <!-- Paired Row: Split-Screen Assay (col 1-7) + Chart & Glass-Box Inspector (col 8-12) -->
+        <div class="grid">
+          <section class="panel" style="grid-column: span 7;" aria-label="15-second split-screen assay">
+            <div class="panel-header">
+              <h2 id="activeTaskTitle">Split-Screen Assay: SchemaGuard v3</h2>
+              <span class="meta num" id="activeTaskLock">Locked test SHA-256: fd6cb989</span>
+            </div>
+
+            <div class="split-lanes">
+              <!-- Left Lane: Naive Baseline -->
+              <div class="assay-lane" id="leftLane">
+                <div class="lane-top">
+                  <span class="lane-title" id="leftLaneTitle">Nemotron-Ultra (Bare)</span>
+                  <span class="pill neg" id="leftLaneBadge">Exit code 1 · Failed</span>
+                </div>
+                <div class="lane-stats">
+                  <div class="stat-cell">
+                    <span>Total cost</span>
+                    <strong id="leftCost">$0.001249</strong>
+                  </div>
+                  <div class="stat-cell">
+                    <span>Latency</span>
+                    <strong id="leftLatency">1,431 ms</strong>
+                  </div>
+                  <div class="stat-cell">
+                    <span>Tokens</span>
+                    <strong id="leftTokens">519 tok</strong>
+                  </div>
+                </div>
+                <div class="rung-list" id="leftRungs"></div>
+              </div>
+
+              <!-- Right Lane: Mjolnir 2D Escalation -->
+              <div class="assay-lane" id="rightLane">
+                <div class="lane-top">
+                  <span class="lane-title">Mjolnir 2D Escalation</span>
+                  <span class="pill pos" id="rightLaneBadge">Exit code 0 · Verified</span>
+                </div>
+                <div class="lane-stats">
+                  <div class="stat-cell">
+                    <span>Total cost</span>
+                    <strong id="rightCost">$0.002095</strong>
+                  </div>
+                  <div class="stat-cell">
+                    <span>Latency</span>
+                    <strong id="rightLatency">1,264 ms</strong>
+                  </div>
+                  <div class="stat-cell">
+                    <span>Rungs used</span>
+                    <strong id="rightRungCount">2 rungs</strong>
+                  </div>
+                </div>
+                <div class="rung-list" id="rightRungs"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel" style="grid-column: span 5;" aria-label="Cost comparison and glass-box receipt">
+            <div class="panel-header">
+              <h2>Cost per Verified Fix (USD)</h2>
+              <span class="meta">Lower is better · 10 tasks</span>
+            </div>
+            <div id="costChart" class="chart" style="min-height: 185px; margin-bottom: 16px;"></div>
+
+            <div class="tabs" role="tablist" aria-label="Glass-box receipt inspector">
+              <button type="button" class="tab-btn" role="tab" aria-selected="true" data-inspect-tab="diff">Unified Git Diff</button>
+              <button type="button" class="tab-btn" role="tab" aria-selected="false" data-inspect-tab="tavily">Tavily 3-Stage</button>
+              <button type="button" class="tab-btn" role="tab" aria-selected="false" data-inspect-tab="error">3-Line Error</button>
+              <button type="button" class="tab-btn" role="tab" aria-selected="false" data-inspect-tab="test">Locked Test</button>
+            </div>
+            <pre class="code-box"><code id="inspectorCode"></code></pre>
+          </section>
+        </div>
+
+        <!-- Full-Width Task Matrix Table -->
+        <section class="panel" aria-label="Benchmark task reconciliation ledger">
+          <div class="panel-header">
+            <h2 id="tableSectionTitle">Task Reconciliation Ledger — Mjolnir 2D Escalation (10 of 10 solved)</h2>
+            <div class="controls-bar">
+              <button type="button" class="btn" id="openCustomInlineBtn">Test custom Python</button>
+              <button type="button" class="btn" id="rerunSuiteBtn">Re-verify all 5 arms</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Task</th>
+                  <th>Type</th>
+                  <th>Path up the ladder</th>
+                  <th>Locked test</th>
+                  <th class="n">Tokens</th>
+                  <th class="n">Latency</th>
+                  <th class="n">Cost</th>
+                </tr>
+              </thead>
+              <tbody id="taskTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal 1: Configure Live API Keys -->
+  <div class="drawer-backdrop" id="keysModal" role="dialog" aria-modal="true" aria-labelledby="keysModalTitle">
+    <div class="dialog-card">
+      <div class="panel-header">
+        <h2 id="keysModalTitle">Configure Live Nebius &amp; Tavily API Keys</h2>
+        <button type="button" class="btn" id="closeKeysBtn">Close</button>
+      </div>
+      <p class="meta" id="keysModalNote">
+        Keys are held in browser session memory and sent only when running live races against <code>https://api.tokenfactory.nebius.com/v1</code> (or NVIDIA NIM <code>nvapi-…</code>) and <code>https://api.tavily.com</code>. Leave blank to use server-configured keys or verified deterministic receipts.
+      </p>
+      <div class="field-group">
+        <label for="nebiusKeyInput">Nebius Token Factory API Key</label>
+        <input type="password" id="nebiusKeyInput" class="input" style="width:100%" placeholder="v1.nebius...">
+      </div>
+      <div class="field-group">
+        <label for="tavilyKeyInput">Tavily API Key (/search, /extract, /map)</label>
+        <input type="password" id="tavilyKeyInput" class="input" style="width:100%" placeholder="tvly-...">
+      </div>
+      <div class="controls-bar" style="margin-top: 16px; justify-content: flex-end;">
+        <button type="button" class="btn primary" id="saveKeysBtn">Save keys</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Custom Python Sandbox -->
+  <div class="drawer-backdrop" id="customModal" role="dialog" aria-modal="true" aria-labelledby="customModalTitle">
+    <div class="dialog-card">
+      <div class="panel-header">
+        <h2 id="customModalTitle">Run Custom Python in Read-Only Locked Sandbox</h2>
+        <button type="button" class="btn" id="closeCustomBtn">Close</button>
+      </div>
+      <p class="meta">
+        Executes your candidate code against a read-only locked unit test (<code>stat.S_IREAD</code> + SHA-256 verification) and escalates across live Nemotron tiers when API keys are configured.
+      </p>
+      <div class="field-group">
+        <label for="customBrokenCode">Candidate / Broken Code (<code>solution.py</code>)</label>
+        <textarea id="customBrokenCode" class="textarea-code">def clamp_score(val: float, lo: float = 0.0, hi: float = 1.0) -> float:
+    # Bug: inverted min/max bounds check
+    return min(lo, max(hi, val))</textarea>
+      </div>
+      <div class="field-group">
+        <label for="customTestCode">Locked Unit Test (<code>test_solution.py</code> · <code>stat.S_IREAD</code>)</label>
+        <textarea id="customTestCode" class="textarea-code">import unittest
+from solution import clamp_score
+
+class TestClamp(unittest.TestCase):
+    def test_bounds(self):
+        self.assertEqual(clamp_score(1.5), 1.0)
+        self.assertEqual(clamp_score(-0.2), 0.0)
+
+if __name__ == "__main__":
+    unittest.main()</textarea>
+      </div>
+      <div class="controls-bar" style="margin-top: 16px; justify-content: flex-end;">
+        <button type="button" class="btn primary" id="runCustomSubmitBtn">Execute in locked sandbox</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/charts.js"></script>
+  <script>
+    (() => {
+      let tasksCatalog = [];
+      let benchmarkReport = null;
+      let selectedArm = 'mjolnir_2d_ladder';
+      let selectedTaskId = 'api-01-schema-validator';
+      let currentRaceRight = null;
+      let currentTaskObj = null;
+      let activeInspectTab = 'diff';
+      let categoryFilter = 'all';
+      let nebiusApiKey = '';
+      let tavilyApiKey = '';
+      let serverHasLiveKeys = false;
+
+      const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+
+      const showAlert = (msg) => {
+        const banner = document.getElementById('appAlertBanner');
+        const txt = document.getElementById('appAlertText');
+        if (banner && txt) {
+          txt.textContent = msg;
+          banner.classList.add('visible');
+        }
+      };
+      const clearAlert = () => {
+        const banner = document.getElementById('appAlertBanner');
+        if (banner) banner.classList.remove('visible');
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('task')) selectedTaskId = params.get('task');
+      if (params.get('baseline')) {
+        const bSel = document.getElementById('baselineSelect');
+        const candidateBase = params.get('baseline');
+        if (bSel && [...bSel.options].some((o) => o.value === candidateBase)) {
+          bSel.value = candidateBase;
+        }
+      }
+
+      const fmtUsd = (v) => v == null ? '—' : '$' + Number(v).toFixed(6);
+      const fmtMs = (v) => Math.round(Number(v || 0)).toLocaleString('en-US') + ' ms';
+
+      function updateModeLabel() {
+        const ind = document.getElementById('modeIndicator');
+        if (!ind) return;
+        if (nebiusApiKey || tavilyApiKey || serverHasLiveKeys) {
+          ind.textContent = 'Mode: Live API telemetry active';
+        } else {
+          ind.textContent = 'Mode: Verified deterministic receipts';
+        }
+      }
+
+      function renderSummaryKpis() {
+        if (!benchmarkReport || !Array.isArray(benchmarkReport.arms)) return;
+        const by = Object.fromEntries(benchmarkReport.arms.map((a) => [a.strategy_id, a]));
+        const m = by.mjolnir_2d_ladder;
+        const ua = by.ultra_tavily_always;
+        const nt = by.nano_tavily;
+        const ub = by.ultra_alone;
+        const nb = by.nano_alone;
+
+        if (m && ua && ub) {
+          const cutPct = ua.cost_per_verified_fix_usd
+            ? ((1 - m.cost_per_verified_fix_usd / ua.cost_per_verified_fix_usd) * 100).toFixed(1)
+            : '0.0';
+          const hl = document.getElementById('headlineFinding');
+          if (hl) {
+            hl.textContent = `Mjolnir solved ${m.solved_count} of ${m.total_tasks} tasks at ${fmtUsd(m.cost_per_verified_fix_usd)} per verified fix (-${cutPct}% vs Always-On Ultra at ${fmtUsd(ua.cost_per_verified_fix_usd)}), while bare Nemotron-Ultra solved ${(ub.api_shift_solved || '0/6').replace('/', ' of ')} post-cutoff 2026 API shifts.`;
+          }
+        }
+
+        const setKpi = (armId, armData, deltaHtml) => {
+          const card = document.querySelector(`[data-arm="${armId}"]`);
+          if (!card || !armData) return;
+          const valEl = card.querySelector('.kpi-value');
+          const delEl = card.querySelector('.kpi-delta');
+          if (valEl) {
+            valEl.innerHTML = `${Number(armData.solve_rate_pct).toFixed(1)}%<small>${esc(armData.solved_count)}/${esc(armData.total_tasks)}</small>`;
+          }
+          if (delEl) delEl.innerHTML = deltaHtml;
+        };
+
+        if (m) {
+          const cutPct = (ua && ua.cost_per_verified_fix_usd)
+            ? ` · -${((1 - m.cost_per_verified_fix_usd / ua.cost_per_verified_fix_usd) * 100).toFixed(1)}% vs Ultra+Tavily`
+            : '';
+          setKpi('mjolnir_2d_ladder', m, `<span class="pos">${esc(fmtUsd(m.cost_per_verified_fix_usd))} / fix</span>${esc(cutPct)}`);
+        }
+        if (ua) setKpi('ultra_tavily_always', ua, `${esc(fmtUsd(ua.cost_per_verified_fix_usd))} / fix · ${esc(ua.logic_solved)} on logic`);
+        if (nt) setKpi('nano_tavily', nt, `${esc(fmtUsd(nt.cost_per_verified_fix_usd))} / fix · ${esc(nt.api_shift_solved)} on API shifts`);
+        if (ub) setKpi('ultra_alone', ub, `<span class="neg">${esc(ub.api_shift_solved)} on 2026 APIs</span> · ${esc(fmtUsd(ub.cost_per_verified_fix_usd))} / fix`);
+        if (nb) setKpi('nano_alone', nb, `${esc(fmtUsd(nb.cost_per_verified_fix_usd))} / fix · 1-shot probe`);
+      }
+
+      function renderChart() {
+        const el = document.getElementById('costChart');
+        if (!el || !window.Charts || !benchmarkReport) return;
+        const arms = benchmarkReport.arms || [];
+        const defs = [
+          ['mjolnir_2d_ladder', 'Mjolnir'],
+          ['ultra_alone', 'Ultra'],
+          ['nano_tavily', 'Nano+Tav'],
+          ['ultra_tavily_always', 'Ultra+Tav']
+        ];
+        const valid = defs.map(([id, label]) => {
+          const found = arms.find((a) => a.strategy_id === id);
+          return found && found.cost_per_verified_fix_usd != null
+            ? { label, val: Number((found.cost_per_verified_fix_usd * 1000).toFixed(3)) }
+            : null;
+        }).filter(Boolean);
+        if (!valid.length) return;
+        Charts.bars(el, {
+          labels: valid.map((d) => d.label),
+          values: valid.map((d) => d.val),
+          highlight: 0,
+          xAt: valid.map((_, idx) => idx),
+          format: (v) => '$' + (v / 1000).toFixed(4)
+        });
+      }
+
+      function renderRungs(containerId, rec) {
+        const el = document.getElementById(containerId);
+        if (!el || !rec) return;
+        el.innerHTML = (rec.steps || []).map((s) => {
+          const passed = s.sandbox_receipt && s.sandbox_receipt.passed;
+          const pillCls = passed ? 'pill pos' : 'pill neg';
+          const pillTxt = passed ? 'Exit 0 · Passed' : 'Exit ' + (s.sandbox_receipt ? s.sandbox_receipt.exit_code : 1);
+          const modelName = s.nebius_call ? s.nebius_call.model_id.split('/').pop() : s.tier;
+          const tavNote = s.used_tavily ? ' + Tavily (/search, /extract, /map)' : ' (No web search)';
+          const errLine = (!passed && s.sandbox_receipt && s.sandbox_receipt.error_receipt)
+            ? s.sandbox_receipt.error_receipt.error_type + ' -> ' + s.sandbox_receipt.error_receipt.diagnostic_category
+            : 'All unit test assertions verified.';
+          const rawLabel = s.stage_label || '';
+          const stageTitle = (rawLabel.startsWith('Rung ') || rawLabel.startsWith('Step '))
+            ? rawLabel
+            : `Rung ${s.step_index}: ${rawLabel}`;
+          return `<div class="rung-item">
+            <div class="rung-head">
+              <span>${esc(stageTitle)}</span>
+              <span class="${pillCls}">${esc(pillTxt)}</span>
+            </div>
+            <div class="rung-sub num">${esc(modelName + tavNote)} · ${esc(fmtUsd(s.nebius_call ? s.nebius_call.cost_usd : 0))}</div>
+            <div class="rung-sub">${esc(errLine)}</div>
+          </div>`;
+        }).join('');
+      }
+
+      function updateInspector() {
+        const codeEl = document.getElementById('inspectorCode');
+        if (!codeEl || !currentRaceRight) return;
+        if (activeInspectTab === 'diff') {
+          const rawDiff = currentRaceRight.final_unified_diff || '# No diff generated';
+          codeEl.textContent = rawDiff
+            .replace(/\+\+\+ b\//g, '\n+++ b/')
+            .replace(/@@ -/g, '\n@@ -');
+        } else if (activeInspectTab === 'tavily') {
+          const tavStep = (currentRaceRight.steps || []).find((s) => s.tavily_call && s.tavily_call.triggered);
+          if (tavStep) {
+            const tc = tavStep.tavily_call;
+            codeEl.textContent = [
+              `Query      ${tc.query}`,
+              `Endpoints  ${(tc.endpoints_called || []).join(' · ')}`,
+              `Sources    ${(tc.urls_discovered || []).join('\n           ')}`,
+              `Source     ${tc.source_mode} · ${tc.latency_ms} ms · ${fmtUsd(tc.estimated_cost_usd)}`,
+              '',
+              tc.extracted_markdown || ''
+            ].join('\n');
+          } else {
+            codeEl.textContent = 'Tavily was not called on this task.\nThe error was classified as a logic failure (or passed pre-check), so the router did not search the web.';
+          }
+        } else if (activeInspectTab === 'error') {
+          const err = currentRaceRight.initial_error_receipt;
+          codeEl.textContent = (err && err.distilled_3_lines) ? err.distilled_3_lines : 'Initial probe passed with Exit Code 0.';
+        } else if (activeInspectTab === 'test') {
+          codeEl.textContent = (currentTaskObj && currentTaskObj.test_code) || '# Read-only locked test';
+        }
+      }
+
+      function applyRaceData(leftRec, rightRec, taskObj) {
+        currentRaceRight = rightRec;
+        currentTaskObj = taskObj;
+        document.getElementById('activeTaskTitle').textContent = 'Split-Screen Assay: ' + (taskObj.title || rightRec.task_title);
+        document.getElementById('activeTaskLock').textContent = 'Locked test SHA-256: ' + (rightRec.test_sha256 || '').slice(0, 8);
+
+        document.getElementById('leftLaneTitle').textContent = (leftRec.escalation_path || [])[0] || leftRec.strategy;
+        const lBadge = document.getElementById('leftLaneBadge');
+        lBadge.className = leftRec.verified_solved ? 'pill pos' : 'pill neg';
+        lBadge.textContent = leftRec.verified_solved ? 'Exit code 0 · Passed' : `Exit code ${leftRec.final_exit_code || 1} · Failed`;
+        document.getElementById('leftCost').textContent = fmtUsd(leftRec.total_cost_usd);
+        document.getElementById('leftLatency').textContent = fmtMs(leftRec.total_latency_ms);
+        document.getElementById('leftTokens').textContent = (leftRec.total_tokens || 0) + ' tok';
+        renderRungs('leftRungs', leftRec);
+
+        const rBadge = document.getElementById('rightLaneBadge');
+        rBadge.className = rightRec.verified_solved ? 'pill pos' : 'pill neg';
+        rBadge.textContent = rightRec.verified_solved ? 'Exit code 0 · Verified' : `Exit code ${rightRec.final_exit_code || 1} · Failed`;
+        document.getElementById('rightCost').textContent = fmtUsd(rightRec.total_cost_usd);
+        document.getElementById('rightLatency').textContent = fmtMs(rightRec.total_latency_ms);
+        const rCount = (rightRec.steps || []).length;
+        document.getElementById('rightRungCount').textContent = rCount + (rCount === 1 ? ' rung' : ' rungs');
+        renderRungs('rightRungs', rightRec);
+
+        updateInspector();
+      }
+
+      function renderTable() {
+        const tbody = document.getElementById('taskTableBody');
+        if (!tbody || !benchmarkReport) return;
+        const armObj = (benchmarkReport.arms || []).find((a) => a.strategy_id === selectedArm) || benchmarkReport.arms[4];
+        if (!armObj) return;
+
+        const cleanLabel = (armObj.label || '').replace('MJOLNIR', 'Mjolnir');
+        document.getElementById('tableSectionTitle').textContent =
+          `Task Reconciliation Ledger — ${cleanLabel} (${armObj.solved_count} of ${armObj.total_tasks} solved · ${fmtUsd(armObj.cost_per_verified_fix_usd)} / fix)`;
+
+        const tierName = { nano: 'Nano', super: 'Super', ultra: 'Ultra', sandbox: 'Pre-check', unpatched: 'Unpatched' };
+        const rows = (armObj.receipts || []).filter((r) => categoryFilter === 'all' || r.task_category === categoryFilter);
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="meta">No tasks match the selected category filter.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rows.map((r) => {
+          const isSel = r.task_id === selectedTaskId;
+          const catPill = r.task_category === 'api_shift'
+            ? '<span class="pill warn">API change</span>'
+            : '<span class="pill">Logic</span>';
+          const verdictPill = r.verified_solved
+            ? '<span class="pill pos">Passed</span>'
+            : '<span class="pill neg">Failed</span>';
+          const chain = (r.steps || []).map((s) => (tierName[s.tier] || s.tier) + (s.used_tavily ? ' + Tavily' : '')).join(' → ');
+          const shortId = r.task_id.split('-').slice(0, 2).join('-');
+          const shortTitle = (r.task_title || '').split(':')[0];
+          return `<tr data-row-task="${esc(r.task_id)}" aria-selected="${isSel}">
+            <td><code>${esc(shortId)}</code></td>
+            <td>${esc(shortTitle)}</td>
+            <td>${catPill}</td>
+            <td>${esc(chain)}</td>
+            <td>${verdictPill}</td>
+            <td class="n num">${Number(r.total_tokens || 0).toLocaleString('en-US')}</td>
+            <td class="n num">${esc(fmtMs(r.total_latency_ms))}</td>
+            <td class="n num">${esc(fmtUsd(r.total_cost_usd))}</td>
+          </tr>`;
+        }).join('');
+
+        tbody.querySelectorAll('[data-row-task]').forEach((tr) => {
+          tr.addEventListener('click', () => {
+            selectedTaskId = tr.dataset.rowTask;
+            const sel = document.getElementById('taskSelect');
+            if (sel) sel.value = selectedTaskId;
+            loadTaskFromMatrix(selectedTaskId);
+            renderTable();
+          });
+        });
+      }
+
+      function loadTaskFromMatrix(taskId) {
+        if (!benchmarkReport || !benchmarkReport.task_matrix) return;
+        const matrixRow = benchmarkReport.task_matrix[taskId];
+        const baselineStrat = document.getElementById('baselineSelect').value || 'ultra_alone';
+        const tObj = tasksCatalog.find((t) => t.id === taskId) || { id: taskId, title: taskId };
+        if (matrixRow && matrixRow[baselineStrat] && matrixRow['mjolnir_2d_ladder']) {
+          applyRaceData(matrixRow[baselineStrat], matrixRow['mjolnir_2d_ladder'], tObj);
+        }
+      }
+
+      async function runLiveRace() {
+        const btn = document.getElementById('runRaceBtn');
+        btn.disabled = true;
+        btn.textContent = 'Running sandbox…';
+        clearAlert();
+        try {
+          const baselineStrat = document.getElementById('baselineSelect').value || 'ultra_alone';
+          const resp = await fetch('/api/race', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              task_id: selectedTaskId,
+              left_strategy: baselineStrat,
+              right_strategy: 'mjolnir_2d_ladder',
+              nebius_api_key: nebiusApiKey,
+              tavily_api_key: tavilyApiKey
+            })
+          });
+          const data = await resp.json();
+          if (!resp.ok) {
+            throw new Error(data.error || `Assay request failed with HTTP ${resp.status}`);
+          }
+          if (data.left && data.right) {
+            applyRaceData(data.left, data.right, data.task || {});
+          }
+        } catch (err) {
+          showAlert(err.message || 'Could not complete split-screen assay. Verify server connection and retry.');
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Run split-screen assay';
+        }
+      }
+
+      async function init() {
+        document.getElementById('dismissAlertBtn').addEventListener('click', clearAlert);
+
+        try {
+          const [statusResp, tasksResp, benchResp] = await Promise.all([
+            fetch('/api/status').then((r) => r.ok ? r.json() : {}),
+            fetch('/api/tasks').then((r) => { if (!r.ok) throw new Error('Failed to load benchmark tasks'); return r.json(); }),
+            fetch('/api/benchmark/latest').then((r) => { if (!r.ok) throw new Error('Failed to load benchmark ledger'); return r.json(); })
+          ]);
+          tasksCatalog = tasksResp.tasks || [];
+          benchmarkReport = benchResp;
+          serverHasLiveKeys = Boolean(statusResp.nebius_key_configured || statusResp.tavily_key_configured);
+          const scopeEl = document.querySelector('.brand-scope');
+          if (scopeEl && statusResp.nebius_endpoint && statusResp.nebius_endpoint.includes('integrate.api.nvidia.com')) {
+            scopeEl.textContent = 'NVIDIA NIM /v1';
+          }
+          if (serverHasLiveKeys) {
+            const noteEl = document.getElementById('keysModalNote');
+            if (noteEl) {
+              noteEl.textContent = 'Active live API keys are already loaded on the server (.env). Enter keys below only if you want to override them for this browser session.';
+            }
+          }
+          updateModeLabel();
+        } catch (err) {
+          showAlert(err.message || 'Failed to load workbench data from local server.');
+        }
+
+        if (tasksCatalog.length && !tasksCatalog.some((t) => t.id === selectedTaskId)) {
+          selectedTaskId = tasksCatalog[0].id;
+        }
+
+        const sel = document.getElementById('taskSelect');
+        sel.replaceChildren(
+          ...tasksCatalog.map((t) => new Option(t.title, t.id, false, t.id === selectedTaskId))
+        );
+
+        sel.addEventListener('change', () => {
+          selectedTaskId = sel.value;
+          loadTaskFromMatrix(selectedTaskId);
+          renderTable();
+        });
+
+        document.getElementById('baselineSelect').addEventListener('change', () => {
+          loadTaskFromMatrix(selectedTaskId);
+        });
+
+        document.getElementById('runRaceBtn').addEventListener('click', runLiveRace);
+
+        document.querySelectorAll('[data-arm]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            selectedArm = btn.dataset.arm;
+            document.querySelectorAll('[data-arm]').forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+            renderTable();
+          });
+        });
+
+        document.querySelectorAll('[data-inspect-tab]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            activeInspectTab = btn.dataset.inspectTab;
+            document.querySelectorAll('[data-inspect-tab]').forEach((b) => b.setAttribute('aria-selected', String(b === btn)));
+            updateInspector();
+          });
+        });
+
+        document.querySelectorAll('[data-nav-view]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            categoryFilter = btn.dataset.navView;
+            document.querySelectorAll('[data-nav-view]').forEach((b) => b.removeAttribute('aria-current'));
+            btn.setAttribute('aria-current', 'page');
+            document.getElementById('appSidebar').classList.remove('open');
+            renderTable();
+          });
+        });
+
+        document.getElementById('menuToggleBtn').addEventListener('click', () => {
+          document.getElementById('appSidebar').classList.toggle('open');
+        });
+
+        const keysModalEl = document.getElementById('keysModal');
+        const customModalEl = document.getElementById('customModal');
+        const openKeys = () => keysModalEl.classList.add('open');
+        const closeKeys = () => keysModalEl.classList.remove('open');
+        const openCustom = () => customModalEl.classList.add('open');
+        const closeCustom = () => customModalEl.classList.remove('open');
+
+        document.getElementById('openKeysBtn').addEventListener('click', openKeys);
+        document.getElementById('topKeysBtn').addEventListener('click', openKeys);
+        document.getElementById('closeKeysBtn').addEventListener('click', closeKeys);
+        keysModalEl.addEventListener('click', (e) => { if (e.target === keysModalEl) closeKeys(); });
+
+        document.getElementById('saveKeysBtn').addEventListener('click', () => {
+          nebiusApiKey = document.getElementById('nebiusKeyInput').value.trim();
+          tavilyApiKey = document.getElementById('tavilyKeyInput').value.trim();
+          updateModeLabel();
+          closeKeys();
+        });
+
+        document.getElementById('openCustomBtn').addEventListener('click', openCustom);
+        document.getElementById('openCustomInlineBtn').addEventListener('click', openCustom);
+        document.getElementById('closeCustomBtn').addEventListener('click', closeCustom);
+        customModalEl.addEventListener('click', (e) => { if (e.target === customModalEl) closeCustom(); });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') {
+            closeKeys();
+            closeCustom();
+            document.getElementById('appSidebar').classList.remove('open');
+          }
+        });
+
+        document.getElementById('runCustomSubmitBtn').addEventListener('click', async () => {
+          const btn = document.getElementById('runCustomSubmitBtn');
+          btn.disabled = true;
+          btn.textContent = 'Executing in sandbox…';
+          clearAlert();
+          try {
+            const broken = document.getElementById('customBrokenCode').value;
+            const testCode = document.getElementById('customTestCode').value;
+            const resp = await fetch('/api/run-custom', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                title: 'Custom Sandbox Verification',
+                broken_code: broken,
+                test_code: testCode,
+                nebius_api_key: nebiusApiKey,
+                tavily_api_key: tavilyApiKey
+              })
+            });
+            const rec = await resp.json();
+            if (!resp.ok) {
+              throw new Error(rec.error || `Sandbox request failed with HTTP ${resp.status}`);
+            }
+            applyRaceData(rec.initial_probe || rec, rec, { title: 'Custom Sandbox Verification', test_code: testCode });
+            closeCustom();
+          } catch (err) {
+            closeCustom();
+            showAlert(err.message || 'Custom sandbox execution failed. Check your Python code and locked test.');
+          } finally {
+            btn.disabled = false;
+            btn.textContent = 'Execute in locked sandbox';
+          }
+        });
+
+        document.getElementById('rerunSuiteBtn').addEventListener('click', async () => {
+          const btn = document.getElementById('rerunSuiteBtn');
+          btn.disabled = true;
+          btn.textContent = 'Re-verifying 5 arms…';
+          clearAlert();
+          try {
+            const resp = await fetch('/api/benchmark/run', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ nebius_api_key: nebiusApiKey, tavily_api_key: tavilyApiKey })
+            });
+            const data = await resp.json();
+            if (!resp.ok) {
+              throw new Error(data.error || `Benchmark run failed with HTTP ${resp.status}`);
+            }
+            benchmarkReport = data;
+            renderSummaryKpis();
+            renderChart();
+            renderTable();
+            loadTaskFromMatrix(selectedTaskId);
+          } catch (err) {
+            showAlert(err.message || 'Failed to re-verify 5-arm suite.');
+          } finally {
+            btn.disabled = false;
+            btn.textContent = 'Re-verify all 5 arms';
+          }
+        });
+
+        renderSummaryKpis();
+        loadTaskFromMatrix(selectedTaskId);
+        renderTable();
+        renderChart();
+        window.addEventListener('resize', renderChart);
+      }
+
+      init();
+    })();
+  </script>
+</body>
+</html>

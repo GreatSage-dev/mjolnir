@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mjolnir: verified coding fixes on Nebius Token Factory</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+  <script>document.documentElement.classList.add('js')</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --surface: #ebebeb;
+      --stage: #dfe3df;
+      --ink: #0d2a1c;
+      --muted: #46554c;
+      --accent: #f6e016;
+      --accent-ink: #0d2a1c;
+
+      --font: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
+
+      --step-small: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+      --step-body: clamp(1.0625rem, 1.02rem + 0.2vw, 1.1875rem);
+      --step-lead: clamp(1.1875rem, 1.08rem + 0.45vw, 1.4375rem);
+      --step-head: clamp(1.875rem, 1.3rem + 2vw, 3rem);
+      --step-display: clamp(2.5rem, 0.8rem + 4.6vw, 5.5rem);
+
+      --margin: clamp(1.25rem, 3vw, 3rem);
+      --gutter: clamp(1rem, 2vw, 2rem);
+      --section: clamp(5rem, 8vw, 8rem);
+
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+      --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+      --ease-soft: cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-padding-top: 5rem; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      font-size: var(--step-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+    h1, h2, h3, p, figure, ul, ol { margin: 0; }
+    ul, ol { padding: 0; list-style: none; }
+    img, svg { display: block; max-width: 100%; height: auto; }
+    button, input, select { font: inherit; color: inherit; }
+    button { background: none; border: 0; padding: 0; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    ::selection { background: var(--accent); color: var(--accent-ink); }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    h1, h2, h3 { font-weight: 500; letter-spacing: -0.035em; line-height: 0.98; text-wrap: balance; }
+    p { max-width: 58ch; text-wrap: pretty; }
+    .nums { font-variant-numeric: tabular-nums; }
+    .muted { color: var(--muted); }
+
+    .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: 2rem; }
+    .section { padding: var(--section) var(--margin); }
+
+    /* Controls */
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      min-height: 3.25rem; padding: 0 1.6rem;
+      background: var(--accent); color: var(--accent-ink);
+      font-weight: 500; font-size: var(--step-body);
+      transition: transform 140ms var(--ease-out), background-color 180ms ease;
+    }
+    .button:hover { background: #e9d30d; }
+    .button:active { transform: scale(0.97); }
+    .button svg { transition: transform 180ms var(--ease-out); }
+    .button:hover svg { transform: translateX(3px); }
+    .text-link {
+      font-weight: 500;
+      text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.07em;
+      text-decoration-color: rgba(13, 42, 28, 0.35);
+      transition: text-decoration-color 180ms ease;
+    }
+    .text-link:hover { text-decoration-color: currentColor; }
+
+    /* Sticky navigation with the current section marked */
+    .site-header {
+      position: sticky; top: 0; z-index: 20;
+      background: var(--bg);
+      padding: 1.1rem var(--margin);
+      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+    }
+    .wordmark { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 500; font-size: var(--step-body); letter-spacing: -0.03em; }
+    .site-nav { display: flex; align-items: center; gap: 2rem; font-size: var(--step-small); }
+    .site-nav a { position: relative; padding: 0.35rem 0; color: var(--muted); transition: color 180ms ease; }
+    .site-nav a:hover, .site-nav a[aria-current="true"] { color: var(--ink); }
+    .site-nav a.nav-link::after {
+      content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: var(--ink); transform: scaleX(0); transform-origin: left;
+      transition: transform 240ms var(--ease-out);
+    }
+    .site-nav a[aria-current="true"]::after { transform: scaleX(1); }
+    .nav-button {
+      display: inline-flex; align-items: center; min-height: 2.5rem; padding: 0 1rem;
+      background: var(--ink); color: var(--bg) !important; font-weight: 500;
+      transition: background-color 180ms ease;
+    }
+    .nav-button:hover { background: #16402c; }
+
+    /* Hero: headline, sentence, action on the left; the live assay on its stage at the right */
+    .hero { padding: clamp(2rem, 5vw, 4.5rem) var(--margin) var(--section); align-items: center; }
+    .hero-copy { grid-column: 1 / 7; display: flex; flex-direction: column; gap: 2rem; }
+    .hero-title { font-size: var(--step-display); line-height: 0.94; letter-spacing: -0.045em; }
+    .hero-lead { font-size: var(--step-lead); line-height: 1.42; max-width: 34ch; }
+    .hero-actions { display: flex; align-items: center; gap: 1.75rem; flex-wrap: wrap; }
+    .hero-stack { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: var(--step-small); color: var(--muted); }
+    .hero-stage { grid-column: 7 / 13; background: var(--stage); padding: clamp(1.25rem, 3vw, 2.75rem); }
+
+    /* Interface fragments keep the product's own conventions */
+    [data-ui] { background: #ffffff; color: #0d2a1c; border: 1px solid #d5dcd7; font-size: 0.9375rem; line-height: 1.45; }
+    [data-ui] .ui-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.95rem 1.15rem; border-bottom: 1px solid #e6eae7; font-weight: 500; }
+    [data-ui] .ui-body { padding: 1rem 1.15rem 1.15rem; display: flex; flex-direction: column; gap: 0.85rem; }
+    .tag { display: inline-flex; align-items: center; height: 1.6rem; padding: 0 0.6rem; font-size: 0.8125rem; font-weight: 500; white-space: nowrap; }
+    .tag-pass { background: #dcfae5; color: #04250e; }
+    .tag-fail { background: #ffedea; color: #831c1e; }
+    .tag-skip { background: #eef0ee; color: #3d4a42; }
+    .tag-accent { background: var(--accent); color: var(--accent-ink); }
+    [data-ui] pre {
+      margin: 0; padding: 0.75rem 0.85rem; background: #f3f5f3;
+      font-size: 0.8125rem; line-height: 1.5; white-space: pre-wrap; word-break: break-word;
+    }
+    [data-ui] .ladder { display: flex; flex-direction: column; }
+    [data-ui] .ladder li { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.85rem; padding: 0.6rem 0; }
+    [data-ui] .ladder li + li { border-top: 1px solid #eef1ef; }
+    .ladder .rung-name { font-weight: 500; }
+    .ladder .rung-cost { color: #4b5a51; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+    .ui-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 0.25rem; font-weight: 500; font-variant-numeric: tabular-nums; }
+    .ui-total strong { font-size: 1.375rem; font-weight: 500; letter-spacing: -0.02em; }
+    .segmented { display: flex; flex-wrap: wrap; gap: 0.35rem; padding-top: 0.15rem; }
+    .segmented button { min-height: 2.25rem; padding: 0 0.85rem; background: #eef0ee; font-size: 0.875rem; font-weight: 500; transition: background-color 160ms ease, color 160ms ease; }
+    .segmented button:hover { background: #e2e6e3; }
+    .segmented button[aria-pressed="true"] { background: #0d2a1c; color: #f7f7f7; }
+    .stage-caption { margin-top: 1rem; font-size: var(--step-small); color: var(--muted); }
+
+    /* Results: three figures set as type */
+    .results { background: var(--ink); color: var(--bg); }
+    .results-head { grid-column: 1 / 5; }
+    .results h2 { font-size: var(--step-head); }
+    .results .results-intro { color: #c9d4cd; margin-top: 1.25rem; }
+    .figures { grid-column: 6 / 13; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); align-self: end; }
+    .figure-value { font-size: var(--step-head); line-height: 1; letter-spacing: -0.04em; font-weight: 500; font-variant-numeric: tabular-nums; }
+    .figure-value.is-accent { color: var(--accent); }
+    .figure-label { margin-top: 0.85rem; font-size: var(--step-body); color: #dfe7e2; max-width: 22ch; }
+
+    /* Two failure modes */
+    .modes-head { grid-column: 1 / 5; }
+    .modes-head h2 { font-size: var(--step-head); }
+    .modes-head p { margin-top: 1.25rem; }
+    .mode { grid-column: span 4; display: flex; flex-direction: column; gap: 1rem; }
+    .mode figure, .photo-plate { overflow: hidden; background: var(--surface); }
+    .mode img, .photo-plate img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .mode h3 { font-size: var(--step-lead); }
+    .mode .route { display: inline-flex; align-self: flex-start; padding: 0.35rem 0.7rem; background: var(--surface); font-size: var(--step-small); font-weight: 500; }
+    .mode .route.is-accent { background: var(--accent); }
+
+    /* Method: one card, four fields */
+    .fields { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .field { padding: clamp(2rem, 3vw, 2.75rem) var(--margin) clamp(2rem, 3vw, 2.75rem) clamp(1.25rem, 2vw, 2rem); display: flex; flex-direction: column; gap: 2rem; min-height: 40rem; }
+    .field:first-child { padding-left: var(--margin); }
+    .field-1 { background: var(--bg); }
+    .field-2 { background: var(--surface); }
+    .field-3 { background: var(--stage); }
+    .field-4 { background: var(--ink); color: var(--bg); }
+    .field h2 { font-size: var(--step-head); }
+    .field-top { min-height: 3rem; font-size: var(--step-small); color: inherit; opacity: 0.8; }
+    .field .card { margin-top: auto; transition: transform 160ms var(--ease-out); }
+    .field:hover .card { transform: translateY(-6px); }
+    .field .card .ui-body { gap: 0.5rem; font-size: 0.875rem; }
+    .field-clause { font-size: var(--step-lead); line-height: 1.25; font-weight: 500; }
+
+    /* Ledger */
+    .ledger-intro { grid-column: 1 / 7; display: flex; flex-direction: column; gap: 1.25rem; justify-content: flex-end; }
+    .ledger-intro h2 { font-size: var(--step-head); }
+    .ledger-photo { grid-column: 8 / 13; }
+    .ledger-photo img { aspect-ratio: 16 / 9; }
+    .ledger-table { width: 100%; border-collapse: collapse; margin-top: 3rem; font-variant-numeric: tabular-nums; }
+    .ledger-table th { text-align: left; padding: 0.9rem 1rem; font-size: var(--step-small); font-weight: 500; color: var(--muted); background: var(--surface); }
+    .ledger-table td { padding: 1.15rem 1rem; }
+    .ledger-table th:last-child, .ledger-table td:last-child { padding-right: 0.6rem; }
+    .ledger-table tbody tr + tr td { border-top: 1px solid #e3e6e3; }
+    .ledger-table .n { text-align: right; white-space: nowrap; }
+    .ledger-table .arm-name { font-weight: 500; }
+    .ledger-table .arm-policy { display: block; font-size: var(--step-small); color: var(--muted); margin-top: 0.15rem; }
+    .ledger-table tr.is-winner td { background: var(--accent); border-top-color: var(--accent); }
+    .ledger-table tr.is-winner + tr td { border-top-color: var(--accent); }
+    .ledger-note { margin-top: 1.25rem; font-size: var(--step-small); color: var(--muted); max-width: 65ch; }
+
+    /* Receipts showcase */
+    .receipts { background: var(--surface); }
+    .receipts-left { grid-column: 1 / 6; display: flex; flex-direction: column; gap: 1.5rem; }
+    .receipts-left h2 { font-size: var(--step-head); }
+    .receipt-index { display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; margin-top: 0.25rem; }
+    .receipt-index button {
+      display: flex; align-items: baseline; gap: 0.75rem; text-align: left;
+      font-size: var(--step-lead); line-height: 1.2; letter-spacing: -0.025em;
+      color: var(--muted); transition: color 180ms ease;
+    }
+    .receipt-index button span { font-size: var(--step-small); letter-spacing: 0; color: var(--muted); }
+    .receipt-index button:hover { color: var(--ink); }
+    .receipt-index button[aria-selected="true"] { color: var(--ink); font-weight: 500; }
+    .receipt-index button[aria-selected="true"] span { color: var(--ink); }
+    .receipt-photo { margin-top: auto; }
+    .receipt-photo img { aspect-ratio: 16 / 9; }
+    .receipt-stage { grid-column: 6 / 13; background: var(--stage); padding: clamp(1.25rem, 3vw, 2.5rem); }
+    .receipt-sheet { transition: opacity 200ms ease; }
+    .receipt-sheet pre { max-height: 13.5rem; overflow-y: auto; }
+
+    /* Call to action */
+    .cta { background: var(--accent); color: var(--accent-ink); align-items: center; }
+    .cta-copy { grid-column: 1 / 6; display: flex; flex-direction: column; gap: 1.25rem; }
+    .cta-copy h2 { font-size: var(--step-display); line-height: 0.94; }
+    .cta-form-wrap { grid-column: 7 / 13; }
+    .cta-form .ui-body { gap: 1rem; }
+    .cta-form label { display: block; font-weight: 500; margin-bottom: 0.35rem; font-size: 0.9375rem; }
+    .cta-form select { width: 100%; min-height: 2.875rem; padding: 0 0.75rem; background: #f7f7f7; border: 1px solid #c5cdc7; font-size: 0.9375rem; }
+    .cta-form button[type="submit"] {
+      min-height: 3.25rem; background: #0d2a1c; color: #f7f7f7; font-weight: 500;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+      transition: background-color 180ms ease, transform 140ms var(--ease-out);
+    }
+    .cta-form button[type="submit"]:hover { background: #16402c; }
+    .cta-form button[type="submit"]:active { transform: scale(0.98); }
+
+    /* Footer of tiles */
+    .footer { padding: 0.5rem var(--margin) 1.25rem; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0.5rem; }
+    .tile { background: var(--surface); padding: 1.5rem; min-height: 12rem; display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; }
+    .tile-about { grid-column: 1 / 5; }
+    .tile-nav { grid-column: 5 / 8; }
+    .tile-credits { grid-column: 8 / 10; }
+    .tile-data { grid-column: 10 / 13; }
+    .tile-nav ul { display: flex; flex-direction: column; gap: 0.35rem; }
+    .tile-brand { grid-column: 1 / 9; min-height: 15rem; background: var(--ink); color: var(--bg); align-items: center; justify-content: center; }
+    .tile-brand span { font-size: var(--step-display); line-height: 1; letter-spacing: -0.055em; }
+    .tile-launch { grid-column: 9 / 13; min-height: 15rem; background: var(--accent); transition: background-color 180ms ease; }
+    .tile-launch:hover { background: #e9d30d; }
+    .tile-launch .launch-title { font-size: var(--step-lead); line-height: 1.15; font-weight: 500; }
+    .tile-launch svg { align-self: flex-end; transition: transform 200ms var(--ease-out); }
+    .tile-launch:hover svg { transform: translate(4px, -4px); }
+    .small { font-size: var(--step-small); color: var(--muted); }
+
+    /* Motion: content stays visible without script and under reduced motion */
+    .lines .line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+    .lines [data-line] { display: block; }
+    @media (prefers-reduced-motion: no-preference) {
+      .js [data-rise] { opacity: 0; transform: translateY(18px); animation: rise 800ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 90ms + 120ms); }
+      .js .lines [data-line] { transform: translateY(105%); animation: line 900ms var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 110ms + 100ms); }
+      .js [data-reveal] { opacity: 0; transform: translateY(24px); transition: opacity 700ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: calc(var(--d, 0) * 80ms); }
+      .js [data-reveal].is-in { opacity: 1; transform: none; }
+      .drift img { animation: drift 18s var(--ease-soft) infinite alternate; will-change: transform; }
+    }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    @keyframes line { to { transform: none; } }
+    @keyframes drift { from { transform: scale(1); } to { transform: scale(1.07) translate(-1.5%, -1%); } }
+
+    /* Tablet */
+    @media (max-width: 1024px) {
+      .hero-copy, .hero-stage { grid-column: 1 / -1; }
+      .results-head, .figures { grid-column: 1 / -1; }
+      .modes-head { grid-column: 1 / -1; }
+      .mode { grid-column: span 6; }
+      .fields { grid-template-columns: 1fr; }
+      .field { min-height: auto; padding: 2.75rem var(--margin); display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 2rem; }
+      .field h2 { grid-column: 1 / -1; }
+      .field-top { display: none; }
+      .field .card { margin-top: 0; order: 2; }
+      .field-clause { order: 1; }
+      .ledger-intro, .ledger-photo { grid-column: 1 / -1; }
+      .receipts-left, .receipt-stage { grid-column: 1 / -1; }
+      .receipt-photo { display: none; }
+      .cta-copy, .cta-form-wrap { grid-column: 1 / -1; }
+      .tile-about, .tile-nav, .tile-credits, .tile-data { grid-column: span 6; }
+      .tile-brand, .tile-launch { grid-column: 1 / -1; }
+    }
+    /* Phone */
+    @media (max-width: 640px) {
+      .site-nav .nav-link { display: none; }
+      .figures { grid-template-columns: 1fr; gap: 1.75rem; }
+      .mode { grid-column: 1 / -1; }
+      .field { grid-template-columns: 1fr; padding: 2.25rem var(--margin); }
+      .field .card { order: 1; }
+      .field-clause { order: 2; }
+      .ledger-table th:nth-child(2), .ledger-table td:nth-child(2), .ledger-table .arm-policy { display: none; }
+      .ledger-table th, .ledger-table td { padding: 0.75rem 0.4rem; font-size: var(--step-small); }
+      .receipt-index { flex-direction: row; flex-wrap: wrap; gap: 0.5rem 1.25rem; }
+      .receipt-index button span { display: none; }
+      .tile-about, .tile-nav, .tile-credits, .tile-data { grid-column: 1 / -1; min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <a href="/" class="wordmark" aria-label="Mjolnir home">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 3h16v6h-6v9H8V9H2V3Z" fill="#0d2a1c"/></svg>
+      Mjolnir
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#results" class="nav-link">Results</a>
+      <a href="#method" class="nav-link">Method</a>
+      <a href="#ledger" class="nav-link">Ledger</a>
+      <a href="#receipts" class="nav-link">Receipts</a>
+      <a href="/app" class="nav-button">Workbench</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero grid" aria-label="Introduction">
+      <div class="hero-copy">
+        <h1 class="hero-title lines">
+          <span class="line"><span data-line style="--i:0">Test first.</span></span>
+          <span class="line"><span data-line style="--i:1">Escalate second.</span></span>
+        </h1>
+        <p class="hero-lead" data-rise style="--i:2">
+          A coding agent that runs every fix against a locked unit test on Nemotron Nano first, and only pays for live docs or a bigger model when the test says why it failed.
+        </p>
+        <div class="hero-actions" data-rise style="--i:3">
+          <a href="/app" class="button">
+            Open the workbench
+            <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </a>
+          <a href="#ledger" class="text-link">See the 5-arm ledger</a>
+        </div>
+        <ul class="hero-stack" data-rise style="--i:4">
+          <li>Nebius Token Factory</li>
+          <li>NVIDIA Nemotron 3 Nano, Super, Ultra</li>
+          <li>Tavily search, extract, map</li>
+        </ul>
+      </div>
+
+      <div class="hero-stage" data-rise style="--i:3">
+        <div data-ui id="assayCard">
+          <div class="ui-head">
+            <span id="assayTitle">SchemaGuard v3 migration</span>
+            <span class="tag tag-pass" id="assayVerdict">Verified · exit 0</span>
+          </div>
+          <div class="ui-body">
+            <ol class="ladder" id="assayLadder" aria-label="Escalation ladder"></ol>
+            <pre><code id="assayCode"></code></pre>
+            <div class="ui-total"><span id="assayTotalLabel">Cost of the verified fix</span><strong id="assayTotal">$0.002095</strong></div>
+            <div class="segmented" role="group" aria-label="Choose a failure type">
+              <button type="button" aria-pressed="true" data-mode="api">API change</button>
+              <button type="button" aria-pressed="false" data-mode="logic">Logic bug</button>
+              <button type="button" aria-pressed="false" data-mode="tamper">Test tampering</button>
+            </div>
+          </div>
+        </div>
+        <p class="stage-caption">Pick a failure type to see which rung of the ladder catches it.</p>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="results section grid" id="results" aria-labelledby="resultsTitle">
+      <div class="results-head">
+        <h2 id="resultsTitle" data-reveal>Ten tasks, locked tests</h2>
+        <p class="results-intro" data-reveal style="--d:1">Five routing strategies ran the same ten Python tasks. A patch only counts when the read-only test passes.</p>
+      </div>
+      <div class="figures">
+        <div data-reveal style="--d:1">
+          <div class="figure-value is-accent" id="figSolved">100%</div>
+          <p class="figure-label" id="figSolvedLabel">of tasks verified by Mjolnir, 10 of 10</p>
+        </div>
+        <div data-reveal style="--d:2">
+          <div class="figure-value" id="figCost">$0.0017</div>
+          <p class="figure-label" id="figCostLabel">per verified fix, 52% below Ultra with Tavily always on</p>
+        </div>
+        <div data-reveal style="--d:3">
+          <div class="figure-value" id="figUltra">0 of 6</div>
+          <p class="figure-label">2026 API changes fixed by bare Nemotron Ultra</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Two failure modes -->
+    <section class="section grid" id="why" aria-labelledby="modesTitle">
+      <div class="modes-head">
+        <h2 id="modesTitle" data-reveal>Bugs fail in two ways</h2>
+        <p data-reveal style="--d:1">A bigger model cannot guess a method that was renamed after it was trained. A web search cannot solve a graph algorithm. Mjolnir reads the error and sends each bug down the right road.</p>
+      </div>
+      <article class="mode" data-reveal style="--d:1">
+        <figure>
+          <img src="/assets/bridge-arch-620.jpg" width="1200" height="750" alt="A steel arch bridge spanning still grey water">
+        </figure>
+        <h3>Missing knowledge</h3>
+        <p>ImportError, AttributeError or an unknown keyword. The code calls an API that changed in 2026.</p>
+        <span class="route is-accent">Fix: Nano with live Tavily docs</span>
+      </article>
+      <article class="mode" data-reveal style="--d:2">
+        <figure>
+          <img src="/assets/vault-columns-508.jpg" width="1200" height="750" alt="Pale stone columns rising into pointed vaults">
+        </figure>
+        <h3>Missing reasoning</h3>
+        <p>AssertionError on an edge case. The API is fine; the logic is wrong. Search would only add noise.</p>
+        <span class="route">Fix: escalate to Super, then Ultra</span>
+      </article>
+    </section>
+
+    <!-- Method -->
+    <section class="fields" id="method" aria-labelledby="methodTitle">
+      <div class="field field-1">
+        <h2 id="methodTitle" data-reveal>Four steps</h2>
+        <div class="card" data-ui data-reveal style="--d:1">
+          <div class="ui-head"><span>Nano probe</span><span class="tag tag-fail">exit 1</span></div>
+          <div class="ui-body nums">
+            <span>Nemotron-3-Nano-30B</span>
+            <span>$0.000045 · 210 ms</span>
+            <pre>test_solution.py
+mode 0444 · sha fd6cb989</pre>
+          </div>
+        </div>
+        <p class="field-clause" data-reveal style="--d:2">First, the cheapest model tries the fix against a test it cannot edit.</p>
+      </div>
+      <div class="field field-2">
+        <p class="field-top" aria-hidden="true"></p>
+        <div class="card" data-ui data-reveal style="--d:2">
+          <div class="ui-head"><span>Error receipt</span><span class="tag tag-accent">Knowledge gap</span></div>
+          <div class="ui-body">
+            <span>Missing symbol: dict</span>
+            <span>solution.py, line 11</span>
+            <pre>AttributeError: 'UserPayload'
+has no attribute 'dict'</pre>
+          </div>
+        </div>
+        <p class="field-clause" data-reveal style="--d:3">Then the traceback is cut to three lines that name the cause.</p>
+      </div>
+      <div class="field field-3">
+        <p class="field-top" aria-hidden="true"></p>
+        <div class="card" data-ui data-reveal style="--d:3">
+          <div class="ui-head"><span>Tavily docs</span><span class="tag tag-pass">found</span></div>
+          <div class="ui-body nums">
+            <span>search, extract, map</span>
+            <span>342 ms</span>
+            <pre>SchemaGuard 3.0:
+use .model_dump_strict()</pre>
+          </div>
+        </div>
+        <p class="field-clause" data-reveal style="--d:4">Next, only API errors pull the current docs from the web.</p>
+      </div>
+      <div class="field field-4">
+        <p class="field-top" aria-hidden="true"></p>
+        <div class="card" data-ui data-reveal style="--d:4">
+          <div class="ui-head"><span>Verified diff</span><span class="tag tag-pass">exit 0</span></div>
+          <div class="ui-body nums">
+            <span>Total $0.002095</span>
+            <span>2 rungs used</span>
+            <pre>- user.dict(exclude_none=True)
++ user.model_dump_strict(
++     exclude_none=True)</pre>
+          </div>
+        </div>
+        <p class="field-clause" data-reveal style="--d:5">Finally, the test passes and you get the diff with its cost.</p>
+      </div>
+    </section>
+
+    <!-- Ledger -->
+    <section class="section" id="ledger" aria-labelledby="ledgerTitle">
+      <div class="ledger-head grid">
+        <div class="ledger-intro">
+          <h2 id="ledgerTitle" data-reveal>The 5-arm ledger</h2>
+          <p data-reveal style="--d:1">Six tasks use SDK changes from 2026; four are pure logic. Same tasks, same locked tests, five ways of choosing a model.</p>
+        </div>
+        <figure class="photo-plate ledger-photo" data-reveal style="--d:2">
+          <img src="/assets/facade-grid-887.jpg" width="1200" height="750" alt="Repeating modular facade of a white concrete building">
+        </figure>
+      </div>
+      <table class="ledger-table" data-reveal style="--d:1">
+        <thead>
+          <tr>
+            <th scope="col">Strategy</th>
+            <th scope="col">How it routes</th>
+            <th scope="col" class="n">API changes</th>
+            <th scope="col" class="n">Logic</th>
+            <th scope="col" class="n">Solved</th>
+            <th scope="col" class="n">Cost per fix</th>
+          </tr>
+        </thead>
+        <tbody id="ledgerBody">
+          <tr class="is-winner"><td><span class="arm-name">Mjolnir 2D ladder</span></td><td>Nano first, Tavily on API errors, Super or Ultra on logic</td><td class="n">6 / 6</td><td class="n">4 / 4</td><td class="n">100%</td><td class="n">$0.001671</td></tr>
+          <tr><td><span class="arm-name">Ultra + Tavily always</span></td><td>Biggest model, web search on every task</td><td class="n">6 / 6</td><td class="n">3 / 4</td><td class="n">90%</td><td class="n">$0.003484</td></tr>
+          <tr><td><span class="arm-name">Nano + Tavily</span></td><td>Small model with docs, no escalation</td><td class="n">5 / 6</td><td class="n">1 / 4</td><td class="n">60%</td><td class="n">$0.003396</td></tr>
+          <tr><td><span class="arm-name">Ultra alone</span></td><td>Biggest model, no docs</td><td class="n">0 / 6</td><td class="n">4 / 4</td><td class="n">40%</td><td class="n">$0.002613</td></tr>
+          <tr><td><span class="arm-name">Nano alone</span></td><td>Small model, one try</td><td class="n">0 / 6</td><td class="n">1 / 4</td><td class="n">10%</td><td class="n">$0.000330</td></tr>
+        </tbody>
+      </table>
+      <p class="ledger-note">Ten tasks is a small sample, so read these as a method check, not a market benchmark. Cost per fix divides each strategy's total spend by the tasks it actually solved. Raw receipts: <a class="text-link" href="/api/benchmark/live">live_5arm_telemetry.json</a> · <a class="text-link" href="/api/benchmark/deterministic">deterministic_5arm_benchmark.json</a>.</p>
+    </section>
+
+    <!-- Receipts -->
+    <section class="receipts section grid" id="receipts" aria-labelledby="receiptsTitle">
+      <div class="receipts-left">
+        <h2 id="receiptsTitle" data-reveal>Every fix has a receipt</h2>
+        <p data-reveal style="--d:1">Choose a task to read the diff, the docs Tavily returned and the path up the ladder.</p>
+        <div class="receipt-index" role="tablist" aria-label="Task receipts" data-reveal style="--d:2">
+          <button type="button" role="tab" aria-selected="true" data-receipt="0">SchemaGuard v3 <span>API change</span></button>
+          <button type="button" role="tab" aria-selected="false" data-receipt="1">VecStore hybrid query <span>API change</span></button>
+          <button type="button" role="tab" aria-selected="false" data-receipt="2">NeMo ToolSpec <span>API + types</span></button>
+          <button type="button" role="tab" aria-selected="false" data-receipt="3">DAG tie-break <span>Logic</span></button>
+        </div>
+        <figure class="photo-plate receipt-photo drift" data-reveal style="--d:3">
+          <img src="/assets/bridge-tower-693.jpg" width="1200" height="750" alt="Suspension bridge tower rising through coastal fog above dark cliffs">
+        </figure>
+      </div>
+      <div class="receipt-stage">
+        <div data-ui class="receipt-sheet" id="receiptSheet" data-reveal style="--d:1">
+          <div class="ui-head">
+            <span id="rcTitle">api-01-schema-validator</span>
+            <span class="tag tag-pass">Verified · exit 0</span>
+          </div>
+          <div class="ui-body">
+            <div class="nums" id="rcPath">Nano → Nano + Tavily · $0.002095</div>
+            <pre><code id="rcDiff">- return user.dict(exclude_none=True)
++ return user.model_dump_strict(exclude_none=True)</code></pre>
+            <pre><code id="rcDocs">Loading the Tavily receipt from the benchmark artifact.</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="cta section grid" aria-labelledby="ctaTitle">
+      <div class="cta-copy">
+        <h2 id="ctaTitle" data-reveal>Race it<br>yourself</h2>
+        <p data-reveal style="--d:1">Pick a task and a baseline. The workbench runs both side by side against the same locked test and shows what each one cost.</p>
+      </div>
+      <div class="cta-form-wrap">
+        <form class="cta-form" data-ui action="/app" method="get" data-reveal style="--d:1">
+          <div class="ui-head"><span>New split-screen race</span><span class="tag tag-accent">Nebius /v1</span></div>
+          <div class="ui-body">
+            <div>
+              <label for="ctaTask">Task</label>
+              <select id="ctaTask" name="task">
+                <option value="api-01-schema-validator">SchemaGuard v3 migration</option>
+                <option value="api-06-nemo-tool-router-v2">NemoToolRouter v2 strict dispatch</option>
+                <option value="logic-02-dag-topo-tiebreak">Topological sort with tie-break</option>
+              </select>
+            </div>
+            <div>
+              <label for="ctaBaseline">Race against</label>
+              <select id="ctaBaseline" name="baseline">
+                <option value="ultra_alone">Nemotron Ultra alone</option>
+                <option value="ultra_tavily_always">Ultra with Tavily always on</option>
+                <option value="nano_alone">Nemotron Nano alone</option>
+              </select>
+            </div>
+            <button type="submit">
+              Start the race
+              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M3 9h11M10 4l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" aria-label="Footer">
+    <div class="tile tile-about">
+      <p>Mjolnir is a coding agent built on Nebius Token Factory, NVIDIA Nemotron 3 and Tavily.</p>
+      <p class="small">MIT licence · Nebius x NVIDIA Global AI Hackathon 2026</p>
+    </div>
+    <div class="tile tile-nav">
+      <p class="small">Pages</p>
+      <ul>
+        <li><a class="text-link" href="/app">Workbench</a></li>
+        <li><a class="text-link" href="#method">Method</a></li>
+        <li><a class="text-link" href="#ledger">Ledger</a></li>
+      </ul>
+    </div>
+    <div class="tile tile-credits">
+      <p class="small">Photographs</p>
+      <p class="small">Matthew Wiebe, Rob Bye, Jeff Sheldon and Roman Kraft, Unsplash licence.</p>
+    </div>
+    <div class="tile tile-data">
+      <p class="small">Data</p>
+      <a class="text-link" href="/api/benchmark/latest">Download the raw receipts</a>
+    </div>
+    <div class="tile tile-brand"><span>Mjolnir</span></div>
+    <a href="/app" class="tile tile-launch">
+      <span class="launch-title">Open the workbench</span>
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" aria-hidden="true"><path d="M9 31L31 9M31 9H13M31 9v18" stroke="currentColor" stroke-width="4"/></svg>
+    </a>
+  </footer>
+
+  <script src="/assets/base.js"></script>
+  <script>
+    (() => {
+      // Hero assay: the three failure types and how the ladder handles each
+      const modes = {
+        api: {
+          title: 'SchemaGuard v3 migration', verdict: ['Verified · exit 0', 'tag-pass'],
+          ladder: [['Nano', 'exit 1', 'tag-fail', '$0.000045'], ['Nano + Tavily', 'exit 0', 'tag-pass', '$0.000050'], ['Super, Ultra', 'not needed', 'tag-skip', '$0']],
+          code: "AttributeError: 'UserPayload' object has no attribute 'dict'\n- return user.dict(exclude_none=True)\n+ return user.model_dump_strict(exclude_none=True)",
+          totalLabel: 'Cost of the verified fix (incl. Tavily)', total: '$0.002095'
+        },
+        logic: {
+          title: 'Topological sort tie-break', verdict: ['Verified · exit 0', 'tag-pass'],
+          ladder: [['Nano', 'exit 1', 'tag-fail', '$0.000043'], ['Super', 'exit 1', 'tag-fail', '$0.000217'], ['Ultra', 'exit 0', 'tag-pass', '$0.001312']],
+          code: "AssertionError: ['b', 'a', 'c'] != ['a', 'b', 'c']\nTavily skipped: this is a logic bug, not an API change\n+ heapq.heappush(ready, neighbour)",
+          totalLabel: 'Cost of the verified fix', total: '$0.001572'
+        },
+        tamper: {
+          title: 'Patch tries to edit the test', verdict: ['Rejected · exit 1', 'tag-fail'],
+          ladder: [['Read-only lock', 'held', 'tag-pass', 'mode 0444'], ['SHA-256 check', 'matched', 'tag-pass', 'fd6cb989'], ['Patch', 'rejected', 'tag-fail', '$0']],
+          code: "open('test_solution.py', 'w').write('assert True')\nPermissionError: the test file is read-only\nThe patch fails; green tests cannot be faked.",
+          totalLabel: 'Charged for a fake pass', total: '$0'
+        }
+      };
+      const esc = (s) => String(s == null ? '' : s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+      const ladderEl = document.getElementById('assayLadder');
+      function showMode(key) {
+        const m = modes[key]; if (!m) return;
+        document.getElementById('assayTitle').textContent = m.title;
+        const v = document.getElementById('assayVerdict'); v.textContent = m.verdict[0]; v.className = 'tag ' + m.verdict[1];
+        ladderEl.innerHTML = m.ladder.map(([name, state, cls, cost]) =>
+          `<li><span class="rung-name">${esc(name)}</span><span class="rung-cost">${esc(cost)}</span><span class="tag ${esc(cls)}">${esc(state)}</span></li>`).join('');
+        document.getElementById('assayCode').textContent = m.code;
+        document.getElementById('assayTotalLabel').textContent = m.totalLabel;
+        document.getElementById('assayTotal').textContent = m.total;
+        document.querySelectorAll('[data-mode]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === key)));
+      }
+      document.querySelectorAll('[data-mode]').forEach((b) => b.addEventListener('click', () => showMode(b.dataset.mode)));
+      showMode('api');
+
+      // Receipts and the hero ladder are read from the real benchmark artifact (task_matrix)
+      const usd = (v) => v == null ? '–' : '$' + Number(v).toFixed(6);
+      const tierName = { nano: 'Nano', super: 'Super', ultra: 'Ultra', sandbox: 'Pre-check' };
+      const stepName = (s) => (tierName[s.tier] || s.tier) + (s.used_tavily ? ' + Tavily' : '');
+      // keep only the changed lines of a unified diff so it reads in a glance
+      const changedLines = (diff, maxLines = 16) => {
+        const lines = (diff || '').split('\n')
+          .filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---)/.test(l) && !l.includes('+++ b/'));
+        if (!lines.length) return 'No change needed.';
+        return lines.length > maxLines ? lines.slice(0, maxLines).join('\n') + '\n…' : lines.join('\n');
+      };
+      const receiptIds = ['api-01-schema-validator', 'api-04-vector-hybrid-query', 'api-06-nemo-tool-router-v2', 'logic-02-dag-topo-tiebreak'];
+      let matrix = null;
+      const sheet = document.getElementById('receiptSheet');
+      function showReceipt(i) {
+        document.querySelectorAll('[data-receipt]').forEach((b) => b.setAttribute('aria-selected', String(Number(b.dataset.receipt) === i)));
+        const rec = matrix && matrix[receiptIds[i]] && matrix[receiptIds[i]].mjolnir_2d_ladder;
+        if (!rec) return;
+        const tav = (rec.steps || []).map((s) => s.tavily_call).find((t) => t && t.triggered);
+        sheet.style.opacity = '0.35';
+        setTimeout(() => {
+          document.getElementById('rcTitle').textContent = rec.task_id;
+          document.getElementById('rcPath').textContent = (rec.steps || []).map(stepName).join(' → ') + ' · ' + usd(rec.total_cost_usd);
+          document.getElementById('rcDiff').textContent = changedLines(rec.final_unified_diff, 18);
+          document.getElementById('rcDocs').textContent = tav
+            ? `${tav.endpoints_called.join('\n')}\n\n${(tav.urls_discovered || []).slice(0, 3).join('\n')}\n\n${(tav.extracted_markdown || '').slice(0, 560).trim()}`
+            : ((rec.steps || []).length > 1
+              ? 'Tavily not called.\nThe first error was a logic failure, so the router\nescalated to a bigger model instead of searching the web.'
+              : 'Tavily not called.\nThe first error was a logic failure and Nano solved\nit on the first probe without searching the web.');
+          sheet.style.opacity = '1';
+        }, 140);
+      }
+      document.querySelectorAll('[data-receipt]').forEach((b) => b.addEventListener('click', () => showReceipt(Number(b.dataset.receipt))));
+
+      // Build the hero's API and logic ladders from the real runs
+      function ladderFrom(rec) {
+        const rows = (rec.steps || []).map((s) => {
+          const ok = s.sandbox_receipt && s.sandbox_receipt.passed;
+          return [stepName(s), ok ? 'exit 0' : 'exit ' + (s.sandbox_receipt ? s.sandbox_receipt.exit_code : 1), ok ? 'tag-pass' : 'tag-fail', usd(s.nebius_call ? s.nebius_call.cost_usd : 0)];
+        });
+        const first = rec.initial_error_receipt;
+        const hasFirst = first && first.error_type;
+        return {
+          title: rec.task_title.split(':')[0], verdict: rec.verified_solved ? ['Verified · exit 0', 'tag-pass'] : ['Failed · exit 1', 'tag-fail'],
+          ladder: rows,
+          code: (hasFirst ? `${first.error_type}: ${first.error_message}\nRouted as ${(first.diagnostic_category || '').replace('_', ' ').toLowerCase()}\n` : '') + changedLines(rec.final_unified_diff, 6),
+          totalLabel: rec.tavily_triggered ? 'Cost of the verified fix (incl. Tavily)' : 'Cost of the verified fix (no web search)',
+          total: usd(rec.total_cost_usd)
+        };
+      }
+
+      // Results and ledger come from the real benchmark artifact when the server is reachable
+      const policy = {
+        mjolnir_2d_ladder: ['Mjolnir 2D ladder', 'Nano first, Tavily on API errors, Super or Ultra on logic'],
+        ultra_tavily_always: ['Ultra + Tavily always', 'Biggest model, web search on every task'],
+        nano_tavily: ['Nano + Tavily', 'Small model with docs, no escalation'],
+        ultra_alone: ['Ultra alone', 'Biggest model, no docs'],
+        nano_alone: ['Nano alone', 'Small model, one try']
+      };
+      fetch('/api/benchmark/latest').then((r) => r.ok ? r.json() : null).then((rep) => {
+        if (!rep || !rep.arms) return;
+        matrix = rep.task_matrix || null;
+        if (matrix) {
+          const logicOrder = ['logic-04-kv-cache-eviction', 'logic-02-dag-topo-tiebreak', 'logic-01-sliding-rate-limiter', 'logic-03-exact-basis-points-ledger'];
+          const pickedLogicId = logicOrder.find((id) => matrix[id] && matrix[id].mjolnir_2d_ladder && (matrix[id].mjolnir_2d_ladder.steps || []).length > 1) || 'logic-02-dag-topo-tiebreak';
+          receiptIds[3] = pickedLogicId;
+          const logicTabBtn = document.querySelector('[data-receipt="3"]');
+          if (logicTabBtn && matrix[pickedLogicId] && matrix[pickedLogicId].mjolnir_2d_ladder) {
+            const shortLogicTitle = matrix[pickedLogicId].mjolnir_2d_ladder.task_title.split(':')[0];
+            logicTabBtn.innerHTML = `${esc(shortLogicTitle)} <span>Logic</span>`;
+          }
+          const ctaSel = document.getElementById('ctaTask');
+          if (ctaSel && pickedLogicId !== 'logic-02-dag-topo-tiebreak' && matrix[pickedLogicId] && matrix[pickedLogicId].mjolnir_2d_ladder) {
+            const opt = ctaSel.querySelector('option[value="logic-02-dag-topo-tiebreak"]');
+            if (opt) {
+              opt.value = pickedLogicId;
+              opt.textContent = matrix[pickedLogicId].mjolnir_2d_ladder.task_title;
+            }
+          }
+          const api = matrix['api-01-schema-validator'], logic = matrix[pickedLogicId];
+          if (api && api.mjolnir_2d_ladder) modes.api = ladderFrom(api.mjolnir_2d_ladder);
+          if (logic && logic.mjolnir_2d_ladder) modes.logic = ladderFrom(logic.mjolnir_2d_ladder);
+          const pressed = document.querySelector('[data-mode][aria-pressed="true"]');
+          showMode(pressed ? pressed.dataset.mode : 'api');
+          showReceipt(0);
+        }
+        const by = Object.fromEntries(rep.arms.map((a) => [a.strategy_id, a]));
+        const m = by.mjolnir_2d_ladder, ua = by.ultra_tavily_always, ub = by.ultra_alone;
+        if (m) {
+          document.getElementById('figSolved').textContent = Math.round(m.solve_rate_pct) + '%';
+          document.getElementById('figSolvedLabel').textContent = `of tasks verified by Mjolnir, ${m.solved_count} of ${m.total_tasks}`;
+          document.getElementById('figCost').textContent = '$' + Number(m.cost_per_verified_fix_usd).toFixed(4);
+        }
+        if (m && ua && ua.cost_per_verified_fix_usd) {
+          const cut = Math.round((1 - m.cost_per_verified_fix_usd / ua.cost_per_verified_fix_usd) * 100);
+          document.getElementById('figCostLabel').textContent = `per verified fix, ${cut}% below Ultra with Tavily always on`;
+        }
+        if (ub) document.getElementById('figUltra').textContent = ub.api_shift_solved.replace('/', ' of ');
+        const order = ['mjolnir_2d_ladder', 'ultra_tavily_always', 'nano_tavily', 'ultra_alone', 'nano_alone'];
+        document.getElementById('ledgerBody').innerHTML = order.filter((id) => by[id]).map((id) => {
+          const a = by[id];
+          return `<tr class="${id === 'mjolnir_2d_ladder' ? 'is-winner' : ''}">
+            <td><span class="arm-name">${esc(policy[id][0])}</span><span class="arm-policy">${esc(policy[id][1])}</span></td>
+            <td>${esc(policy[id][1])}</td>
+            <td class="n">${esc(a.api_shift_solved.replace('/', ' / '))}</td>
+            <td class="n">${esc(a.logic_solved.replace('/', ' / '))}</td>
+            <td class="n">${Math.round(a.solve_rate_pct)}%</td>
+            <td class="n">${esc(usd(a.cost_per_verified_fix_usd))}</td>
+          </tr>`;
+        }).join('');
+      }).catch(() => {});
+
+      // Mark the section in view in the navigation
+      const links = [...document.querySelectorAll('.site-nav .nav-link')];
+      const targets = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+      if ('IntersectionObserver' in window && targets.length) {
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            links.forEach((a) => a.setAttribute('aria-current', String(a.getAttribute('href') === '#' + e.target.id)));
+          }
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        targets.forEach((t) => io.observe(t));
+      }
+    })();
+  </script>
+</body>
+</html>
